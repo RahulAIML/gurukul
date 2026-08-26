@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { GymLanding } from '../pages/GymLanding';
 import { GymOnboarding } from '../pages/GymOnboarding';
+import { IllustrationReview } from '../pages/IllustrationReview';
 import { fitnessQuestions } from '../features/onboarding/data/fitnessQuestions';
 
 /**
@@ -13,6 +14,8 @@ export default function App() {
       <Route path="/" element={<GymLanding />} />
       <Route path="/gym/onboarding" element={<Navigate to={`/gym/onboarding/${fitnessQuestions[0].id}`} replace />} />
       <Route path="/gym/onboarding/:questionId" element={<GymOnboarding />} />
+      {/* design-review surface, not part of the funnel */}
+      <Route path="/design/illustrations" element={<IllustrationReview />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

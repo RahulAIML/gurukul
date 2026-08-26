@@ -1,0 +1,30 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!--
+    GURUKUL ILLUSTRATION SYSTEM — people/people-neutral
+    Canvas 160. Subject stands on the shared floor line (y=142).
+    Accent = currentColor. Secondary structure = var(--ill-neutral).
+    No gradients and no ids: several illustrations render on one screen.
+    No facial features anywhere in the people set — deliberate.
+  -->
+
+  <!-- floor -->
+  <line x1="34" y1="142" x2="126" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- legs (behind torso) -->
+  <path d="M72 76 L71 110 L71.5 139" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+  <path d="M88 76 L89 110 L88.5 139" stroke="currentColor" stroke-width="12" stroke-linecap="round"/>
+
+  <!-- arms -->
+  <path d="M56 40 L52 66 L51 88" stroke="currentColor" stroke-width="9.5" stroke-linecap="round"/>
+  <path d="M104 40 L108 66 L109 88" stroke="currentColor" stroke-width="9.5" stroke-linecap="round"/>
+
+  <!-- torso: shoulders → lat taper → waist → hips -->
+  <path d="M55 38 C54 47 66.5 57 66 65 C65.5 71 62 74 62 79 L98 79 C98 74 94.5 71 94 65 C93.5 57 106 47 105 38 C99 33 92 31 80 31 C68 31 61 33 55 38 Z" fill="currentColor"/>
+
+  <!-- neck + head -->
+  <rect x="76" y="22" width="8" height="10" fill="currentColor"/>
+  <ellipse cx="80" cy="17" rx="7" ry="8.4" fill="currentColor"/>
+
+  <!-- rim light on the lit edge -->
+  <path d="M57 40 C56.5 48 67 57 66.5 64" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="2.4" stroke-linecap="round"/>
+</svg>

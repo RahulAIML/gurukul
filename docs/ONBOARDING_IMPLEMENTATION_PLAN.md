@@ -1,6 +1,8 @@
 # Onboarding Implementation Plan — Avatar-Based Fitness Personalization (Vertical Slice 1)
 
-**Scope**: Simple landing → 5 personalization questions → temporary result. Nothing else.
+**Scope**: Simple landing → 9 personalization questions → temporary result. Nothing else.
+
+> **Updated during implementation.** Shipped with 9 questions, not 5: `gender` was added first (it calibrates everything after it) and `age`/`height`/`weight` at the end, which needed one new question type (`measure`). The visual direction is now red/carbon per `ADR-012`, not the brass direction this plan was written against. Everything else below held as planned.
 
 ---
 

@@ -1,0 +1,23 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-dumbbells
+       A pair, because the option is plural. Front dumbbell takes the accent,
+       the second sits behind in neutral to give depth without introducing
+       a second perspective. -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- rear dumbbell -->
+  <g opacity="0.55">
+    <rect x="58" y="112" width="44" height="8" rx="4" fill="var(--ill-neutral)"/>
+    <rect x="48" y="102" width="12" height="28" rx="4" fill="var(--ill-neutral)"/>
+    <rect x="100" y="102" width="12" height="28" rx="4" fill="var(--ill-neutral)"/>
+  </g>
+
+  <!-- front dumbbell -->
+  <rect x="46" y="66" width="68" height="11" rx="5.5" fill="currentColor"/>
+  <rect x="30" y="50" width="16" height="43" rx="6" fill="currentColor"/>
+  <rect x="114" y="50" width="16" height="43" rx="6" fill="currentColor"/>
+
+  <!-- rim light along the lit edge of the front bar -->
+  <path d="M34 54 v34" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="3" stroke-linecap="round"/>
+</svg>

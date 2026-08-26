@@ -1,0 +1,23 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — time/time-30-min
+       A session, not a clock face. The ring reads duration as a proportion
+       and the bar beneath reads it as a span; changing one number gives the
+       whole time family (20/30/45/60+) without redrawing anything. -->
+
+  <line x1="34" y1="142" x2="126" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- ring track -->
+  <circle cx="80" cy="66" r="40" stroke="var(--ill-neutral)" stroke-width="11" opacity="0.35"/>
+  <!-- filled arc: 30 of 60 minutes = half. circumference 251.3 -->
+  <circle cx="80" cy="66" r="40" stroke="currentColor" stroke-width="11" stroke-linecap="round"
+          stroke-dasharray="125.6 251.3" transform="rotate(-90 80 66)"/>
+
+  <!-- hands -->
+  <circle cx="80" cy="66" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
+  <path d="M80 66 V44" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
+  <path d="M80 66 L97 76" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
+
+  <!-- session span beneath -->
+  <rect x="40" y="122" width="80" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.35"/>
+  <rect x="40" y="122" width="40" height="8" rx="4" fill="currentColor"/>
+</svg>
