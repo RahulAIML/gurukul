@@ -1,16 +1,17 @@
 <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-dumbbells
-       A pair: front unit in accent, second behind in neutral.
-       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+       A pair, stacked. Restructured taller: at w=112 it was width-limited, so height comes from taller plates rather than scaling.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral).
+       Optical weight normalised against the set: see docs/ILLUSTRATION_SYSTEM.md §9. -->
 
-  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-  <g opacity="0.5">
-    <rect x="58" y="112" width="44" height="8" rx="4" fill="var(--ill-neutral)"/>
-    <rect x="48" y="102" width="12" height="28" rx="4" fill="var(--ill-neutral)"/>
-    <rect x="100" y="102" width="12" height="28" rx="4" fill="var(--ill-neutral)"/>
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.62"/>
+  <rect x="42" y="52" width="76" height="14" rx="7" fill="currentColor"/>
+  <rect x="26" y="30" width="19" height="60" rx="8" fill="currentColor"/>
+  <rect x="117" y="30" width="19" height="60" rx="8" fill="currentColor"/>
+  <path d="M31 36 v44" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="3.5" stroke-linecap="round"/>
+  <g opacity="0.62">
+    <rect x="52" y="112" width="56" height="9" rx="4.5" fill="var(--ill-neutral)"/>
+    <rect x="40" y="98" width="13" height="38" rx="5" fill="var(--ill-neutral)"/>
+    <rect x="107" y="98" width="13" height="38" rx="5" fill="var(--ill-neutral)"/>
   </g>
-  <rect x="38" y="62" width="84" height="11" rx="5.5" fill="currentColor"/>
-  <rect x="24" y="44" width="16" height="47" rx="6" fill="currentColor"/>
-  <rect x="120" y="44" width="16" height="47" rx="6" fill="currentColor"/>
-  <path d="M28 49 v37" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="3" stroke-linecap="round"/>
 </svg>

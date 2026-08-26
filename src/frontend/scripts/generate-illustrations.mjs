@@ -150,23 +150,26 @@ const chevrons = (x, y, count, gap = 14) =>
     `  <path d="M${x} ${y + i * gap} L${x + 10} ${y - 10 + i * gap} L${x + 20} ${y + i * gap}" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="${(0.55 - i * 0.16).toFixed(2)}"/>`,
   );
 
+/* Cues stay inside the 20..140 safe box — they were the only things breaking it. */
 const speedMarks = (x, y) => [
   `  <line x1="${x}" y1="${y}" x2="${x + 20}" y2="${y}" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>`,
   `  <line x1="${x - 6}" y1="${y + 15}" x2="${x + 11}" y2="${y + 15}" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.3"/>`,
 ];
 
 const steps = () => [
-  `  <path d="M112 138 h20 v-14 h20 v-14 h16" stroke="var(--ill-neutral)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>`,
+  `  <path d="M100 138 h12 v-16 h12 v-16 h9" stroke="var(--ill-neutral)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>`,
 ];
 
 const pulse = () => [
-  `  <path d="M18 52 h12 l6 -14 l8 26 l6 -12 h9" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>`,
+  `  <path d="M22 52 h11 l6 -14 l8 26 l6 -12 h8" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>`,
 ];
 
+/* Slimmed from 120x8 with 9x32 plates: goal-get-stronger measured 22.3% ink
+   against a 16.0% set mean, and the bar was the reason. */
 const bar = (y) => [
-  `  <rect x="20" y="${y}" width="120" height="8" rx="4" fill="currentColor"/>`,
-  `  <rect x="22" y="${y - 12}" width="9" height="32" rx="3.5" fill="currentColor"/>`,
-  `  <rect x="129" y="${y - 12}" width="9" height="32" rx="3.5" fill="currentColor"/>`,
+  `  <rect x="24" y="${y}" width="108" height="6" rx="3" fill="currentColor"/>`,
+  `  <rect x="26" y="${y - 9}" width="7" height="21" rx="3" fill="currentColor"/>`,
+  `  <rect x="126" y="${y - 9}" width="7" height="21" rx="3" fill="currentColor"/>`,
 ];
 
 /* ── the set ──────────────────────────────────────────────────────── */
@@ -194,7 +197,7 @@ written.push(write('goals/goal-build-muscle.svg', 'goals/goal-build-muscle',
 written.push(write('goals/goal-lose-fat.svg', 'goals/goal-lose-fat',
   'Fuller midsection in motion. Movement is the message, not a smaller body.',
   figure({ shoulder: 24, waist: 21, belly: 5, arm: 7, pose: 'stride' },
-    { behind: speedMarks(18, 58) })));
+    { behind: speedMarks(28, 58) })));
 
 written.push(write('goals/goal-get-stronger.svg', 'goals/goal-get-stronger',
   'Overhead press: a loaded bar is the clearest read for raw strength.',
@@ -209,7 +212,7 @@ written.push(write('goals/goal-improve-fitness.svg', 'goals/goal-improve-fitness
 written.push(write('goals/goal-build-stamina.svg', 'goals/goal-build-stamina',
   'Lean runner mid-drive with trailing speed marks.',
   figure({ shoulder: 22, waist: 13, arm: 5.5, pose: 'run' },
-    { behind: speedMarks(16, 54) })));
+    { behind: speedMarks(30, 54) })));
 
 written.push(write('goals/goal-start-journey.svg', 'goals/goal-start-journey',
   'Average build stepping toward rising steps. A beginning, not a deficit.',
@@ -240,21 +243,26 @@ written.push(write('equipment/equipment-none.svg', 'equipment/equipment-none',
 
 // time — duration as a proportion. One number generates the family.
 const CIRC = 2 * Math.PI * 40;
+/* Scaled 1.08 about the floor point: measured h=109 against the figure h=125,
+   which is what made the time cards read lighter than their neighbours. */
 function duration(fraction, dashed = false) {
+  const S = 1.08;
   const arc = dashed
     ? `stroke-dasharray="10 16"`
     : `stroke-dasharray="${n(CIRC * fraction)} ${n(CIRC)}"`;
   return [
     floor(),
-    `  <circle cx="80" cy="66" r="40" stroke="var(--ill-neutral)" stroke-width="11" opacity="0.35"/>`,
-    `  <circle cx="80" cy="66" r="40" stroke="currentColor" stroke-width="11" stroke-linecap="round" ${arc} transform="rotate(-90 80 66)"/>`,
+    `  <g transform="translate(80 142) scale(${S}) translate(-80 -142)">`,
+    `  <circle cx="80" cy="66" r="40" stroke="var(--ill-neutral)" stroke-width="12" opacity="0.62"/>`,
+    `  <circle cx="80" cy="66" r="40" stroke="currentColor" stroke-width="12" stroke-linecap="round" ${arc} transform="rotate(-90 80 66)"/>`,
     `  <circle cx="80" cy="66" r="6" fill="#FFFFFF" fill-opacity="0.9"/>`,
     `  <path d="M80 66 V44" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>`,
     `  <path d="M80 66 L97 76" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>`,
-    `  <rect x="40" y="122" width="80" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.35"/>`,
+    `  <rect x="40" y="122" width="80" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.62"/>`,
     dashed
       ? `  <rect x="40" y="122" width="80" height="8" rx="4" fill="currentColor" opacity="0.45"/>`
       : `  <rect x="40" y="122" width="${n(80 * fraction)}" height="8" rx="4" fill="currentColor"/>`,
+    `  </g>`,
   ].join('\n');
 }
 

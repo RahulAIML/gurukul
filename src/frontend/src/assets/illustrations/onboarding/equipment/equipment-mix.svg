@@ -1,12 +1,14 @@
 <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-mix
-       A dumbbell and a kettlebell side by side — two legible objects.
-       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+       A dumbbell above a kettlebell. Stacked vertically: side by side measured h=64 against a 125 figure, the shortest asset in the set.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral).
+       Optical weight normalised against the set: see docs/ILLUSTRATION_SYSTEM.md §9. -->
 
   <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-  <rect x="20" y="78" width="52" height="10" rx="5" fill="currentColor"/>
-  <rect x="14" y="66" width="11" height="34" rx="4" fill="currentColor"/>
-  <rect x="67" y="66" width="11" height="34" rx="4" fill="currentColor"/>
-  <path d="M104 62 C104 50 126 50 126 62" stroke="var(--ill-neutral)" stroke-width="7" stroke-linecap="round" fill="none"/>
-  <path d="M115 66 C99 66 92 80 92 92 C92 105 102 113 115 113 C128 113 138 105 138 92 C138 80 131 66 115 66 Z" fill="var(--ill-neutral)" opacity="0.75"/>
+  <rect x="52" y="34" width="56" height="10" rx="5" fill="currentColor"/>
+  <rect x="38" y="20" width="14" height="38" rx="5" fill="currentColor"/>
+  <rect x="108" y="20" width="14" height="38" rx="5" fill="currentColor"/>
+  <path d="M69 78 C69 66 91 66 91 78" stroke="var(--ill-neutral)" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M80 82 C62 82 54 96 54 110 C54 126 66 136 80 136 C94 136 106 126 106 110 C106 96 98 82 80 82 Z" fill="var(--ill-neutral)" opacity="0.8"/>
+  <path d="M65 98 C62 104 62 114 66 120" stroke="#FFFFFF" stroke-opacity="0.2" stroke-width="3" stroke-linecap="round"/>
 </svg>

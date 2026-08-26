@@ -1,11 +1,14 @@
 <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
   <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-basic
-       Kettlebell and mat. Reads at 76px where a band arc did not.
-       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+       Kettlebell and mat. Kettlebell sized down and scaled 1.04: at 1.24 it measured 26.6% ink against a 17.3% set mean.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral).
+       Optical weight normalised against the set: see docs/ILLUSTRATION_SYSTEM.md §9. -->
 
   <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-  <path d="M66 62 C66 46 94 46 94 62" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/>
-  <path d="M80 66 C58 66 48 84 48 100 C48 116 62 126 80 126 C98 126 112 116 112 100 C112 84 102 66 80 66 Z" fill="currentColor"/>
-  <path d="M60 84 C56 92 56 104 62 112" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="3.5" stroke-linecap="round"/>
-  <rect x="34" y="132" width="92" height="10" rx="5" fill="var(--ill-neutral)" opacity="0.55"/>
+  <g transform="translate(80 142) scale(1.04) translate(-80 -142)">
+    <path d="M66 56 C66 40 94 40 94 56" stroke="currentColor" stroke-width="10" stroke-linecap="round" fill="none"/>
+    <path d="M80 64 C62 64 54 80 54 94 C54 108 66 117 80 117 C94 117 106 108 106 94 C106 80 98 64 80 64 Z" fill="currentColor"/>
+    <path d="M60 78 C56 86 56 98 62 106" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="3.5" stroke-linecap="round"/>
+    <rect x="34" y="126" width="92" height="13" rx="6.5" fill="var(--ill-neutral)" opacity="0.7"/>
+  </g>
 </svg>

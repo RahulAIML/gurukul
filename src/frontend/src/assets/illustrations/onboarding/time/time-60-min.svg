@@ -5,11 +5,13 @@
        not this file. Accent = currentColor, structure = var(--ill-neutral). -->
 
   <line x1="34" y1="142" x2="126" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-  <circle cx="80" cy="66" r="40" stroke="var(--ill-neutral)" stroke-width="11" opacity="0.35"/>
-  <circle cx="80" cy="66" r="40" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-dasharray="243.8 251.3" transform="rotate(-90 80 66)"/>
+  <g transform="translate(80 142) scale(1.08) translate(-80 -142)">
+  <circle cx="80" cy="66" r="40" stroke="var(--ill-neutral)" stroke-width="12" opacity="0.62"/>
+  <circle cx="80" cy="66" r="40" stroke="currentColor" stroke-width="12" stroke-linecap="round" stroke-dasharray="243.8 251.3" transform="rotate(-90 80 66)"/>
   <circle cx="80" cy="66" r="6" fill="#FFFFFF" fill-opacity="0.9"/>
   <path d="M80 66 V44" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
   <path d="M80 66 L97 76" stroke="#FFFFFF" stroke-opacity="0.9" stroke-width="6" stroke-linecap="round"/>
-  <rect x="40" y="122" width="80" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.35"/>
+  <rect x="40" y="122" width="80" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.62"/>
   <rect x="40" y="122" width="77.6" height="8" rx="4" fill="currentColor"/>
+  </g>
 </svg>

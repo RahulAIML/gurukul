@@ -180,7 +180,29 @@ Caught by inspecting the set at 4× and corrected:
 - **Float precision leaked into stroke widths** (`stroke-width="11.049999999999999"`) — the generator now rounds.
 - **`goal-get-stronger`'s bar** crowded the head; raised clear.
 
-Still open: optical weight is close but not perfectly normalised — the object categories sit marginally lighter than the figure categories.
+## 9a. Optical weight normalisation
+
+Measured rather than eyeballed. Each asset is rasterised at 400px with the state colours substituted in, then scored on alpha-weighted ink coverage (share of the canvas actually painted, weighted by opacity) plus content bounding box. Script: the measurement harness in the scratchpad; rerun it after touching any asset.
+
+**Before → after**
+
+| Metric | Before | After |
+|---|---|---|
+| Category mean spread | 3.62 pts | **2.52 pts** |
+| Safe-box violations (content outside x 20..140) | 6 | **0** |
+| Assets with content height under 100 | 7 | **1** (97.6) |
+| Shortest asset | 63.6 | **97.6** |
+| Time family internal spread | 10.4–16.8% | **14.0–18.0%** |
+
+**What the measurement actually revealed**, none of which was visible at card size:
+
+1. **Height, not coverage, was the main driver.** Objects measured h=64–104 against a figure h=125. Short content in a square well reads small however much ink it has.
+2. **Six assets breached the 20px safe margin** — the abstract cues (speed marks, pulse, steps) and two scaled environments ran off the canvas.
+3. **Width-limited assets cannot be fixed by scaling.** ,  and  were already at w≈120, so uniform scaling would have broken the margin. They were restructured taller instead — the dumbbells got taller plates, the mix stacked vertically (h 64 → 116).
+4. **The time family was internally inconsistent** because arc length encodes duration, so a 20-minute ring carried 10.4% ink and a 60-minute ring 16.8%. Fixed by making the unfilled track heavier, so track + arc is roughly constant while the arc still communicates the proportion.
+5. **My first metric was wrong.** Counting pixels above an alpha threshold scored a 12% fill as full ink and an 8% fill as none — a cliff, not a measurement. Switching to alpha-weighted coverage changed which assets were flagged.
+
+**Deliberately not flattened**: within-category spread where it is semantic.  is a lean runner (13.6%) and  carries a loaded bar (20.1%); forcing those equal would destroy the thing the illustration is saying. Figures also still run ~2 pts heavier than objects, which is correct — the figure is the hero.
 
 ## 10. Relationship to the shipped funnel
 

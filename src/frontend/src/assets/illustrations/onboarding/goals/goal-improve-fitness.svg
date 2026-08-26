@@ -5,7 +5,7 @@
        not this file. Accent = currentColor, structure = var(--ill-neutral). -->
 
   <line x1="34" y1="142" x2="126" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
-  <path d="M18 52 h12 l6 -14 l8 26 l6 -12 h9" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>
+  <path d="M22 52 h11 l6 -14 l8 26 l6 -12 h8" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" opacity="0.55" fill="none"/>
   <path d="M70.5 78 L69.5 110 L70.5 139" stroke="currentColor" stroke-width="11.9" stroke-linecap="round" fill="none"/>
   <path d="M89.5 78 L90.5 110 L89.5 139" stroke="currentColor" stroke-width="11.9" stroke-linecap="round" fill="none"/>
   <path d="M57 40 L53 62 L51 77" stroke="currentColor" stroke-width="8.4" stroke-linecap="round" fill="none"/>
