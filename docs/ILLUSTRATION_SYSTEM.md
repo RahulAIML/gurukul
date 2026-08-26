@@ -198,11 +198,11 @@ Measured rather than eyeballed. Each asset is rasterised at 400px with the state
 
 1. **Height, not coverage, was the main driver.** Objects measured h=64–104 against a figure h=125. Short content in a square well reads small however much ink it has.
 2. **Six assets breached the 20px safe margin** — the abstract cues (speed marks, pulse, steps) and two scaled environments ran off the canvas.
-3. **Width-limited assets cannot be fixed by scaling.** ,  and  were already at w≈120, so uniform scaling would have broken the margin. They were restructured taller instead — the dumbbells got taller plates, the mix stacked vertically (h 64 → 116).
+3. **Width-limited assets cannot be fixed by scaling.** `equipment-full-gym`, `equipment-dumbbells` and `equipment-mix` were already at w≈120, so uniform scaling would have broken the margin. They were restructured taller instead — the dumbbells got taller plates, the mix stacked vertically (h 64 → 116).
 4. **The time family was internally inconsistent** because arc length encodes duration, so a 20-minute ring carried 10.4% ink and a 60-minute ring 16.8%. Fixed by making the unfilled track heavier, so track + arc is roughly constant while the arc still communicates the proportion.
 5. **My first metric was wrong.** Counting pixels above an alpha threshold scored a 12% fill as full ink and an 8% fill as none — a cliff, not a measurement. Switching to alpha-weighted coverage changed which assets were flagged.
 
-**Deliberately not flattened**: within-category spread where it is semantic.  is a lean runner (13.6%) and  carries a loaded bar (20.1%); forcing those equal would destroy the thing the illustration is saying. Figures also still run ~2 pts heavier than objects, which is correct — the figure is the hero.
+**Deliberately not flattened**: within-category spread where it is semantic. `goal-build-stamina` is a lean runner (13.6%) and `goal-get-stronger` carries a loaded bar (20.1%); forcing those equal would destroy the thing the illustration is saying. Figures also still run ~2 pts heavier than objects, which is correct — the figure is the hero.
 
 ## 10. Relationship to the shipped funnel
 
