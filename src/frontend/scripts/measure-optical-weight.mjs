@@ -8,7 +8,7 @@
  * colours substituted in, then counts non-transparent pixels and finds the
  * content bounding box.
  */
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import puppeteer from 'puppeteer-core';
 
@@ -26,7 +26,26 @@ for (const cat of CATS) {
   }
 }
 
-const browser = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: 'new' });
+/** Set CHROME_PATH if your browser is somewhere else. */
+function findChrome() {
+  if (process.env.CHROME_PATH) return process.env.CHROME_PATH;
+  const candidates = [
+    'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+  ];
+  const found = candidates.find((c) => existsSync(c));
+  if (!found) {
+    console.error('No Chrome found. Set CHROME_PATH to your browser binary.');
+    process.exit(1);
+  }
+  return found;
+}
+
+const browser = await puppeteer.launch({ executablePath: findChrome(), headless: 'new' });
 const page = await browser.newPage();
 await page.setViewport({ width: 600, height: 600 });
 await page.goto('about:blank');

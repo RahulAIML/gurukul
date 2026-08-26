@@ -2,3 +2,4 @@ node_modules/
 dist/
 .vercel/
 *.local
+scripts/optical-weight.json
