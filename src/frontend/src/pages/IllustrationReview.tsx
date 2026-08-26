@@ -26,53 +26,72 @@ interface Row {
 const ROWS: Row[] = [
   {
     question: 'What would you like to achieve?',
-    helper: 'Goal illustrations — the body itself carries the meaning.',
+    helper: 'Goals — pose plus at most one abstract cue. Never an icon bolted on.',
     category: 'goals',
     options: [
-      { id: 'muscle', illustration: 'goal-build-muscle', label: 'Build Muscle', description: 'Size and shape, built through structured work' },
-      { id: 'fat', illustration: 'goal-build-muscle', label: 'Lose Fat', description: 'Placeholder — uses the muscle sample' },
-      { id: 'strong', illustration: 'goal-build-muscle', label: 'Get Stronger', description: 'Placeholder — uses the muscle sample' },
+      { id: 'muscle', illustration: 'goal-build-muscle', label: 'Build Muscle', description: 'Broad frame, arms flexed, rising chevrons' },
+      { id: 'fat', illustration: 'goal-lose-fat', label: 'Lose Fat', description: 'Fuller midsection in motion' },
+      { id: 'strong', illustration: 'goal-get-stronger', label: 'Get Stronger', description: 'Overhead press with a loaded bar' },
+      { id: 'fit', illustration: 'goal-improve-fitness', label: 'Improve Fitness', description: 'Balanced frame, vitality pulse' },
+      { id: 'stam', illustration: 'goal-build-stamina', label: 'Build Stamina', description: 'Lean runner, speed marks' },
+      { id: 'start', illustration: 'goal-start-journey', label: 'Start My Journey', description: 'Average build, rising steps' },
     ],
   },
   {
     question: 'Which best describes you?',
-    helper: 'Human figures — no faces, so no age, ethnicity or expression is implied.',
+    helper: 'People — frames differ only in shoulder-to-hip ratio. No faces anywhere.',
     category: 'people',
     options: [
-      { id: 'a', illustration: 'people-neutral', label: 'Male', description: 'Placeholder — uses the neutral sample' },
-      { id: 'b', illustration: 'people-neutral', label: 'Female', description: 'Placeholder — uses the neutral sample' },
-      { id: 'c', illustration: 'people-neutral', label: 'Prefer not to say', description: 'The shipped neutral figure' },
+      { id: 'm', illustration: 'people-male', label: 'Male', description: 'V-tapered frame' },
+      { id: 'f', illustration: 'people-female', label: 'Female', description: 'Hip-dominant frame' },
+      { id: 'n', illustration: 'people-neutral', label: 'Prefer not to say', description: 'Between the other two' },
+    ],
+  },
+  {
+    question: 'Where does your practice stand today?',
+    helper: 'Fitness level — one progression. The beginner is a healthy average frame, never weak.',
+    category: 'fitness-level',
+    options: [
+      { id: 'b', illustration: 'level-beginner', label: 'Just starting', description: 'Healthy average frame' },
+      { id: 's', illustration: 'level-some', label: 'Trained a little', description: 'Broader, flatter midsection' },
+      { id: 'e', illustration: 'level-experienced', label: 'Fairly experienced', description: 'Definition appears' },
+      { id: 'a', illustration: 'level-advanced', label: 'Highly experienced', description: 'Most developed frame' },
     ],
   },
   {
     question: 'Where do you prefer to train?',
-    helper: 'Environments — structure in neutral, the thing you train with in accent.',
+    helper: 'Environments — structure stroked in neutral, the training implement filled in accent.',
     category: 'locations',
     options: [
       { id: 'gym', illustration: 'location-gym', label: 'At the Gym', description: 'Rack, bar and bench' },
-      { id: 'home', illustration: 'location-gym', label: 'At Home', description: 'Placeholder — uses the gym sample' },
-      { id: 'out', illustration: 'location-gym', label: 'Outdoors', description: 'Placeholder — uses the gym sample' },
+      { id: 'home', illustration: 'location-home', label: 'At Home', description: 'Room and mat' },
+      { id: 'out', illustration: 'location-outdoor', label: 'Outdoors', description: 'Sun, horizon and an outdoor bar' },
+      { id: 'mix', illustration: 'location-mix', label: 'A Mix of Places', description: 'Gym, home and open air' },
     ],
   },
   {
     question: 'What equipment can you reach?',
-    helper: 'Objects — multi-select, so the markers are square. One disabled state shown.',
+    helper: 'Equipment — multi-select, so the markers are square. Bodyweight is a figure, not an object.',
     category: 'equipment',
     multi: true,
     options: [
-      { id: 'db', illustration: 'equipment-dumbbells', label: 'Dumbbells', description: 'A pair of adjustable or fixed weights' },
-      { id: 'full', illustration: 'location-gym', label: 'Full Gym', description: 'Reuses the gym environment' },
-      { id: 'none', illustration: 'people-neutral', label: 'No Equipment', description: 'Disabled, to show the fourth state', disabled: true },
+      { id: 'full', illustration: 'equipment-full-gym', label: 'Full Gym', description: 'Rack and loaded bar' },
+      { id: 'basic', illustration: 'equipment-basic', label: 'Basic Equipment', description: 'Kettlebell and mat' },
+      { id: 'db', illustration: 'equipment-dumbbells', label: 'Dumbbells', description: 'A pair, second behind in neutral' },
+      { id: 'none', illustration: 'equipment-none', label: 'No Equipment', description: 'Bodyweight — open arms' },
+      { id: 'emix', illustration: 'equipment-mix', label: 'It Varies', description: 'A dumbbell and a kettlebell' },
     ],
   },
   {
     question: 'How much time can you give?',
-    helper: 'Duration — a proportion, not a clock face. One number drives the whole family.',
+    helper: 'Time — duration as a proportion. One number generates the whole family.',
     category: 'time',
     options: [
-      { id: '30', illustration: 'time-30-min', label: '30 minutes', description: 'Ring at half, span at half' },
-      { id: '45', illustration: 'time-30-min', label: '45 minutes', description: 'Placeholder — same sample' },
-      { id: '60', illustration: 'time-30-min', label: '60+ minutes', description: 'Placeholder — same sample' },
+      { id: '20', illustration: 'time-20-min', label: '15–20 minutes', description: 'A third of an hour' },
+      { id: '30', illustration: 'time-30-min', label: '30 minutes', description: 'Half' },
+      { id: '45', illustration: 'time-45-min', label: '45 minutes', description: 'Three quarters' },
+      { id: '60', illustration: 'time-60-min', label: '60+ minutes', description: 'A full hour or more' },
+      { id: 'var', illustration: 'time-varies', label: 'It Varies', description: 'Dashed — no fixed duration' },
     ],
   },
 ];
@@ -80,7 +99,8 @@ const ROWS: Row[] = [
 export function IllustrationReview() {
   const [picked, setPicked] = useState<Record<string, string[]>>({
     goals: ['muscle'],
-    people: ['c'],
+    people: ['n'],
+    'fitness-level': ['e'],
     locations: ['gym'],
     equipment: ['db'],
     time: ['30'],
@@ -118,10 +138,7 @@ export function IllustrationReview() {
             One illustration language
           </h1>
           <p className="mt-4 font-body text-[14.5px] font-light leading-relaxed text-chalk-dim">
-            Five sample illustrations across five categories — a human figure, a goal, an
-            environment, an object and a duration — all rendered by the same{' '}
-            <code className="text-ember">IllustrationOption</code> component. Options repeat a
-            sample where that asset is not drawn yet; those are labelled placeholder.
+            All 27 assets across six populated categories — human figures, goals, fitness level, environments, equipment and durations — every one rendered by the same {String.fromCharCode(60)}IllustrationOption{String.fromCharCode(62)} component. Nothing here is a placeholder.
           </p>
         </div>
 

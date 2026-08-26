@@ -1,0 +1,12 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-mix
+       A dumbbell and a kettlebell side by side — two legible objects.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <rect x="20" y="78" width="52" height="10" rx="5" fill="currentColor"/>
+  <rect x="14" y="66" width="11" height="34" rx="4" fill="currentColor"/>
+  <rect x="67" y="66" width="11" height="34" rx="4" fill="currentColor"/>
+  <path d="M104 62 C104 50 126 50 126 62" stroke="var(--ill-neutral)" stroke-width="7" stroke-linecap="round" fill="none"/>
+  <path d="M115 66 C99 66 92 80 92 92 C92 105 102 113 115 113 C128 113 138 105 138 92 C138 80 131 66 115 66 Z" fill="var(--ill-neutral)" opacity="0.75"/>
+</svg>

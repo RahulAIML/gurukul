@@ -1,6 +1,6 @@
 # Gurukul Onboarding Illustration System
 
-**Status**: Specification + 5 sample assets, awaiting design approval before the remaining assets are produced.
+**Status**: Built. 27 assets across six categories; the shipped funnel renders from this system.
 **Review surface**: `/design/illustrations`
 
 ---
@@ -55,14 +55,14 @@ Hips sit at the **halfway point** of the figure. Head height is ~12.5% of figure
 
 ## 3. Categories
 
-| Category | Folder | Status |
+| Category | Folder | Assets |
 |---|---|---|
-| Human figures | `people/` | 1 sample |
-| Goals | `goals/` | 1 sample |
-| Fitness level | `fitness-level/` | folder ready |
-| Locations / environments | `locations/` | 1 sample |
-| Equipment | `equipment/` | 1 sample |
-| Time / schedule | `time/` | 1 sample |
+| Human figures | `people/` | 3 |
+| Goals | `goals/` | 6 |
+| Fitness level | `fitness-level/` | 4 |
+| Locations / environments | `locations/` | 4 |
+| Equipment | `equipment/` | 5 |
+| Time / schedule | `time/` | 5 |
 | Training style | `training-style/` | folder ready |
 | Motivation | `motivation/` | folder ready |
 | Lifestyle | `lifestyle/` | folder ready |
@@ -169,18 +169,24 @@ No component or routing changes at any point.
 
 ---
 
-## 9. Known gaps in the current samples
+## 9. Fixed during the build
 
-Stated honestly rather than left for review to discover:
+Caught by inspecting the set at 4× and corrected:
 
-- **Optical weight is not yet normalised across categories.** `location-gym` fills more of its canvas than `equipment-dumbbells` does, so the dumbbell reads slightly smaller than its neighbours. Needs a per-category optical-size pass before the full set is produced.
-- **`goal-build-muscle`'s flexed arms** crowd the shoulder line where the fists come back up; the joint reads slightly heavy at 76px.
-- Only 5 of ~30 eventual assets exist. The remaining goal, level, location, equipment and time variants are not drawn — the review prototype repeats samples and labels those options "placeholder" rather than faking coverage.
+- **Fitness-level progression was illegible.** Four frames only spanned ~6.5 units of shoulder width, so beginner and advanced looked alike at 76px. Widened to ~10 units, and the advanced frame now uses the flex pose.
+- ** read as a handbag.** The resistance-band arc over a mat was ambiguous; replaced with a kettlebell.
+- ** read as two random circles.** Dropped the tree, kept sun + horizon + outdoor bar.
+- ** and  read as jumbles.** Redrawn as legible silhouettes at matched size.
+- **Float precision leaked into stroke widths** () — the generator now rounds.
+- **'s bar** crowded the head; raised clear.
 
----
+Still open: optical weight is close but not perfectly normalised — the object categories sit marginally lighter than the figure categories.
 
 ## 10. Relationship to the shipped funnel
 
-The live 9-question funnel currently renders its own inline-SVG avatars (`features/onboarding/avatars/`), which follow the same 8-head canon but are authored as parametric React components rather than asset files.
+**Migration complete.** The parametric avatar layer () and  are deleted. There is now one source of truth:
 
-**These are two implementations of one language, and that is temporary.** On approval of this spec, the avatar layer should be migrated onto the illustration system so there is a single source: `avatars/registry.tsx` retires, `illustrations/registry.ts` becomes the only swap point, and `AvatarOption` collapses into `IllustrationOption`. Doing that migration before approval would mean redrawing everything twice.
+-  — the only swap point
+-  — the only option component
+-  retired;  is an 
+All 27 options across the 9 shipped questions render from asset files. Verified by the 41-check suite.

@@ -1,0 +1,11 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-basic
+       Kettlebell and mat. Reads at 76px where a band arc did not.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <path d="M66 62 C66 46 94 46 94 62" stroke="currentColor" stroke-width="9" stroke-linecap="round" fill="none"/>
+  <path d="M80 66 C58 66 48 84 48 100 C48 116 62 126 80 126 C98 126 112 116 112 100 C112 84 102 66 80 66 Z" fill="currentColor"/>
+  <path d="M60 84 C56 92 56 104 62 112" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="3.5" stroke-linecap="round"/>
+  <rect x="34" y="132" width="92" height="10" rx="5" fill="var(--ill-neutral)" opacity="0.55"/>
+</svg>

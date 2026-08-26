@@ -1,0 +1,13 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — locations/location-outdoor
+       Sun over a horizon with an outdoor bar. Two shapes, unambiguous.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="118" cy="44" r="15" fill="var(--ill-neutral)" opacity="0.55"/>
+  <path d="M118 18 V10 M144 44 H152 M100 26 L94 20 M136 26 L142 20" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.45"/>
+  <path d="M42 142 V64" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+  <path d="M110 142 V64" stroke="currentColor" stroke-width="9" stroke-linecap="round"/>
+  <rect x="30" y="58" width="92" height="10" rx="5" fill="currentColor"/>
+  <path d="M24 126 C48 118 104 118 136 126" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.4" fill="none"/>
+</svg>

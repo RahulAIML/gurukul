@@ -1,0 +1,11 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — locations/location-home
+       Home: the room is the structure, the mat is what you train on.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <path d="M34 142 V88 L80 50 L126 88 V142" stroke="var(--ill-neutral)" stroke-width="7" stroke-linejoin="round" fill="none"/>
+  <rect x="60" y="104" width="40" height="10" rx="5" fill="var(--ill-neutral)" opacity="0.4"/>
+  <rect x="50" y="120" width="60" height="20" rx="10" fill="currentColor"/>
+  <ellipse cx="80" cy="130" rx="7" ry="9" fill="#000000" fill-opacity="0.3"/>
+</svg>

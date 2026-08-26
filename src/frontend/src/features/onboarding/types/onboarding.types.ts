@@ -1,3 +1,5 @@
+import type { IllustrationKey } from '../illustrations/registry';
+
 /**
  * Onboarding question schema.
  *
@@ -5,39 +7,6 @@
  * an object to `data/fitnessQuestions.ts`, never touching a component.
  */
 
-/**
- * Keys into the avatar registry. The UI never references an image path or
- * format, only a key, so the whole illustration layer can be swapped by
- * editing `avatars/registry.tsx` alone.
- */
-export type AvatarKey =
-  | 'gender-male'
-  | 'gender-female'
-  | 'gender-unspecified'
-  | 'goal-build-muscle'
-  | 'goal-lose-fat'
-  | 'goal-get-stronger'
-  | 'goal-improve-fitness'
-  | 'goal-build-stamina'
-  | 'goal-start-journey'
-  | 'level-beginner'
-  | 'level-some'
-  | 'level-experienced'
-  | 'level-advanced'
-  | 'location-gym'
-  | 'location-home'
-  | 'location-outdoors'
-  | 'location-mix'
-  | 'equipment-full-gym'
-  | 'equipment-basic'
-  | 'equipment-dumbbells'
-  | 'equipment-none'
-  | 'equipment-mix'
-  | 'time-short'
-  | 'time-medium'
-  | 'time-long'
-  | 'time-extended'
-  | 'time-varies';
 
 /**
  * The types the questionnaire needs today.
@@ -50,7 +19,7 @@ export interface QuestionOption {
   id: string;
   title: string;
   description: string;
-  avatar: AvatarKey;
+  illustration: IllustrationKey;
   /** Multi-select only: choosing this clears every other selection. */
   exclusive?: boolean;
 }

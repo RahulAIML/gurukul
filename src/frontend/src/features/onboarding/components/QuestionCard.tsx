@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { AvatarOption } from './AvatarOption';
+import { IllustrationOption } from './IllustrationOption';
 import { MeasureInput } from './MeasureInput';
 import type { Question } from '../types/onboarding.types';
 import { useReducedMotion } from '../hooks/useReducedMotion';
@@ -123,11 +123,13 @@ export function QuestionCard({
         className={`grid grid-cols-1 gap-3 ${COLUMN_CLASS[question.columns ?? 2]}`}
       >
         {options.map((option, i) => (
-          <AvatarOption
+          <IllustrationOption
             key={option.id}
-            option={option}
+            illustration={option.illustration}
+            label={option.title}
+            description={option.description}
+            role={isMulti ? 'checkbox' : 'radio'}
             selected={selectedIds.includes(option.id)}
-            questionType={question.type}
             onSelect={() => onSelect(option.id)}
             tabIndex={isMulti ? 0 : i === activeIndex ? 0 : -1}
             registerRef={(el) => {

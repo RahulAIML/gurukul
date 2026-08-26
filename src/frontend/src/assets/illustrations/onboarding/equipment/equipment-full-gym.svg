@@ -1,0 +1,15 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — equipment/equipment-full-gym
+       Rack, loaded bar and a second bar: the full facility.
+       Hand-authored. Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <path d="M38 142 V44" stroke="var(--ill-neutral)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M122 142 V44" stroke="var(--ill-neutral)" stroke-width="7" stroke-linecap="round"/>
+  <path d="M28 142 H48 M112 142 H132" stroke="var(--ill-neutral)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M38 68 h9 M122 68 h-9" stroke="var(--ill-neutral)" stroke-width="5" stroke-linecap="round"/>
+  <rect x="20" y="62" width="120" height="9" rx="4.5" fill="currentColor"/>
+  <rect x="22" y="48" width="10" height="37" rx="4" fill="currentColor"/>
+  <rect x="128" y="48" width="10" height="37" rx="4" fill="currentColor"/>
+  <rect x="52" y="112" width="56" height="8" rx="4" fill="var(--ill-neutral)" opacity="0.6"/>
+</svg>
