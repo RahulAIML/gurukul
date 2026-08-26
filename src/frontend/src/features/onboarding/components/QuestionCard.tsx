@@ -1,0 +1,161 @@
+import { useCallback, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { AvatarOption } from './AvatarOption';
+import { MeasureInput } from './MeasureInput';
+import type { Question } from '../types/onboarding.types';
+import { useReducedMotion } from '../hooks/useReducedMotion';
+
+interface Props {
+  question: Question;
+  selectedIds: string[];
+  stepIndex: number;
+  total: number;
+  direction: 1 | -1;
+  onSelect: (optionId: string) => void;
+  onMeasureChange: (next: string[]) => void;
+  onContinue: () => void;
+}
+
+const COLUMN_CLASS: Record<2 | 3, string> = {
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+};
+
+/**
+ * Renders any question from the schema. This is the whole engine — adding a
+ * question to `fitnessQuestions.ts` needs no change here; adding a new
+ * question *type* means one more branch.
+ */
+export function QuestionCard({
+  question,
+  selectedIds,
+  stepIndex,
+  total,
+  direction,
+  onSelect,
+  onMeasureChange,
+  onContinue,
+}: Props) {
+  const reduced = useReducedMotion();
+  const headingRef = useRef<HTMLHeadingElement>(null);
+  const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
+
+  const isMulti = question.type === 'multiple';
+  const isMeasure = question.type === 'measure';
+  const options = question.options ?? [];
+  const minSelections = question.minSelections ?? 1;
+  const canContinue = selectedIds.length >= minSelections;
+
+  // Move focus to the new question so keyboard and screen-reader users are
+  // carried forward with the visual transition rather than left behind.
+  useEffect(() => {
+    // MeasureInput focuses its own field, which is the more useful target there.
+    if (!isMeasure) headingRef.current?.focus();
+  }, [question.id, isMeasure]);
+
+  /** Arrow-key navigation within the radiogroup, per WAI-ARIA. */
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (isMulti) return;
+      const keys = ['ArrowRight', 'ArrowDown', 'ArrowLeft', 'ArrowUp'];
+      if (!keys.includes(event.key)) return;
+      event.preventDefault();
+
+      const count = options.length;
+      const activeIndex = optionRefs.current.findIndex((el) => el === document.activeElement);
+      const currentIndex = activeIndex >= 0
+        ? activeIndex
+        : Math.max(0, options.findIndex((o) => selectedIds.includes(o.id)));
+
+      const forward = event.key === 'ArrowRight' || event.key === 'ArrowDown';
+      const nextIndex = (currentIndex + (forward ? 1 : -1) + count) % count;
+      optionRefs.current[nextIndex]?.focus();
+    },
+    [isMulti, options, selectedIds],
+  );
+
+  // Roving tabindex: the selected option (or the first) is the single tab stop.
+  const activeIndex = Math.max(0, options.findIndex((o) => selectedIds.includes(o.id)));
+
+  const enter = reduced ? { opacity: 0 } : { opacity: 0, y: direction === 1 ? 12 : -12 };
+  const exit = reduced ? { opacity: 0 } : { opacity: 0, y: direction === 1 ? -8 : 8 };
+
+  return (
+    <motion.section
+      key={question.id}
+      initial={enter}
+      animate={{ opacity: 1, y: 0 }}
+      exit={exit}
+      transition={{ duration: reduced ? 0.12 : 0.28, ease: [0.22, 0.61, 0.36, 1] }}
+      className="flex flex-1 flex-col"
+    >
+      <p className="sr-only" aria-live="polite">
+        Question {stepIndex + 1} of {total}
+      </p>
+
+      <header className="mb-7">
+        <h1
+          ref={headingRef}
+          tabIndex={-1}
+          className="display-tight text-[27px] text-chalk outline-none sm:text-[34px]"
+        >
+          {question.question}
+        </h1>
+        {question.helper && (
+          <p className="mt-3.5 font-body text-[14.5px] font-light leading-relaxed text-chalk-dim sm:text-[15.5px]">
+            {question.helper}
+          </p>
+        )}
+      </header>
+
+      {isMeasure ? (
+        <MeasureInput
+          question={question}
+          value={selectedIds}
+          onChange={onMeasureChange}
+          onSubmit={onContinue}
+        />
+      ) : (
+      <div
+        role={isMulti ? 'group' : 'radiogroup'}
+        aria-label={question.question}
+        onKeyDown={handleKeyDown}
+        className={`grid grid-cols-1 gap-3 ${COLUMN_CLASS[question.columns ?? 2]}`}
+      >
+        {options.map((option, i) => (
+          <AvatarOption
+            key={option.id}
+            option={option}
+            selected={selectedIds.includes(option.id)}
+            questionType={question.type}
+            onSelect={() => onSelect(option.id)}
+            tabIndex={isMulti ? 0 : i === activeIndex ? 0 : -1}
+            registerRef={(el) => {
+              optionRefs.current[i] = el;
+            }}
+          />
+        ))}
+      </div>
+      )}
+
+      {/* Multi-select needs an explicit commit; single-choice auto-advances. */}
+      {isMulti && (
+        <div className="sticky bottom-0 mt-7 -mx-5 border-t border-white/[0.08] bg-carbon/92 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">
+          <button
+            type="button"
+            onClick={onContinue}
+            disabled={!canContinue}
+            className="w-full rounded-md bg-ember py-4 font-body text-[15px] font-semibold tracking-[0.01em] text-white transition-all duration-150 hover:bg-ember-lit disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 focus-visible:ring-offset-carbon"
+          >
+            Continue
+          </button>
+          {!canContinue && (
+            <p className="mt-2.5 text-center font-body text-[12px] text-chalk-dim">
+              Choose at least {minSelections === 1 ? 'one option' : `${minSelections} options`} to continue
+            </p>
+          )}
+        </div>
+      )}
+    </motion.section>
+  );
+}

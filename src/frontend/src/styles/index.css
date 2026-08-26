@@ -1,0 +1,78 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/**
+ * Palette: near-black carbon grounds with a vivid athletic red accent.
+ * Supersedes the warm brass/parchment tokens — see docs/ADR/ADR-012.md.
+ */
+@layer base {
+  :root {
+    --carbon: #0a0a0c;
+    --carbon-2: #121216;
+    --carbon-3: #191920;
+    --carbon-4: #22222b;
+    --ember: #e4262f;
+    --ember-lit: #ff4a52;
+    --ember-deep: #a8161d;
+    --chalk: #ffffff;
+    --chalk-dim: #9a9aa8;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--carbon);
+    color: var(--chalk);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: none;
+  }
+}
+
+@layer utilities {
+  /* Heavy condensed display type, the way athletic brands set headlines. */
+  .display-tight {
+    font-family: 'Archivo', Inter, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+    text-transform: uppercase;
+  }
+
+  /* A single warm red light source behind hero content. */
+  .ember-glow {
+    background: radial-gradient(
+      ellipse at center,
+      rgba(228, 38, 47, 0.18) 0%,
+      rgba(228, 38, 47, 0.05) 40%,
+      rgba(10, 10, 12, 0) 70%
+    );
+  }
+
+  /* Very faint grid — texture without pattern noise. */
+  .grid-faint {
+    background-image:
+      linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
