@@ -174,19 +174,34 @@ No component or routing changes at any point.
 Caught by inspecting the set at 4× and corrected:
 
 - **Fitness-level progression was illegible.** Four frames only spanned ~6.5 units of shoulder width, so beginner and advanced looked alike at 76px. Widened to ~10 units, and the advanced frame now uses the flex pose.
-- ** read as a handbag.** The resistance-band arc over a mat was ambiguous; replaced with a kettlebell.
-- ** read as two random circles.** Dropped the tree, kept sun + horizon + outdoor bar.
-- ** and  read as jumbles.** Redrawn as legible silhouettes at matched size.
-- **Float precision leaked into stroke widths** () — the generator now rounds.
-- **'s bar** crowded the head; raised clear.
+- **`equipment-basic` read as a handbag.** The resistance-band arc over a mat was ambiguous; replaced with a kettlebell.
+- **`location-outdoor` read as two random circles.** Dropped the tree, kept sun + horizon + outdoor bar.
+- **`location-mix` and `equipment-mix` read as jumbles.** Redrawn as legible silhouettes at matched size.
+- **Float precision leaked into stroke widths** (`stroke-width="11.049999999999999"`) — the generator now rounds.
+- **`goal-get-stronger`'s bar** crowded the head; raised clear.
 
 Still open: optical weight is close but not perfectly normalised — the object categories sit marginally lighter than the figure categories.
 
 ## 10. Relationship to the shipped funnel
 
-**Migration complete.** The parametric avatar layer () and  are deleted. There is now one source of truth:
+**Migration complete.** The parametric avatar layer (`features/onboarding/avatars/`) and `AvatarOption` are deleted. There is now one source of truth:
 
--  — the only swap point
--  — the only option component
--  retired;  is an 
+- `illustrations/registry.ts` — the only swap point
+- `IllustrationOption` — the only option component
+- `AvatarKey` retired; `QuestionOption.illustration` is an `IllustrationKey`
+
 All 27 options across the 9 shipped questions render from asset files. Verified by the 41-check suite.
+
+---
+
+## 11. Generated vs hand-authored
+
+`scripts/generate-illustrations.mjs` emits the 19 figure-based and duration assets from the canon in §2. Run it after changing any proportion:
+
+```bash
+node scripts/generate-illustrations.mjs
+```
+
+Those files carry a `GENERATED` header — edit the script, not the file. The 8 environment and equipment assets are hand-authored (they share no armature) and are edited directly.
+
+The split exists because consistency between *figures* is mechanical — one armature, three width parameters — and mechanical consistency should be enforced by code, not by discipline. Environments have no armature to share, so generating them would buy nothing.
