@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { BrandMark } from '../features/onboarding/components/OnboardingLayout';
-import { LanguageToggle } from '../features/onboarding/components/LanguageToggle';
+import { LanguageSelector } from '../features/onboarding/components/LanguageSelector';
 import { useTranslation } from '../i18n';
 
 /**
@@ -23,7 +23,7 @@ export function GymLanding() {
       />
 
       <div className="relative flex justify-end px-5 pt-5 sm:px-8">
-        <LanguageToggle />
+        <LanguageSelector />
       </div>
 
       <main className="relative flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">

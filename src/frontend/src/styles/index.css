@@ -27,7 +27,7 @@
     margin: 0;
     background: var(--carbon);
     color: var(--chalk);
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Open Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -39,11 +39,13 @@
 
 @layer utilities {
   /* Heavy condensed display type, the way athletic brands set headlines. */
+  /* Open Sans is a humanist face, not a condensed display one, so it needs
+     less negative tracking than Archivo did or the caps start to collide. */
   .display-tight {
-    font-family: 'Archivo', Inter, sans-serif;
+    font-family: 'Open Sans', 'Noto Sans Devanagari', system-ui, sans-serif;
     font-weight: 800;
-    letter-spacing: -0.02em;
-    line-height: 1.02;
+    letter-spacing: -0.005em;
+    line-height: 1.1;
     text-transform: uppercase;
   }
 

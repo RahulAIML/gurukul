@@ -11,6 +11,9 @@ interface Props {
   onSubmit: () => void;
 }
 
+/** Inches must be 0–11; 5'14" is a typo, not a height. */
+const MAX_INCHES = 11;
+
 /**
  * Numeric measurement field — age, height, weight.
  *
@@ -20,10 +23,15 @@ interface Props {
  * downstream ever has to ask "is this pounds or kilos?" — the answer map does
  * not contain pounds.
  *
+ * UNIT SWITCHING CONVERTS rather than clearing. Because the canonical value is
+ * the stored truth, switching cm → ft/in is a pure re-presentation of the same
+ * measurement: 180 cm becomes 5 ft 11 in, and nothing is lost. An earlier
+ * version cleared the field on every switch to avoid reinterpreting 70 kg as
+ * 70 lb — but converting is not reinterpreting, and clearing made a user who
+ * merely wanted to check the other unit retype their height.
+ *
  * Not a slider: people know their age and weight as a number, and typing one
  * is faster and more precise than dragging, especially on a phone.
- * `inputMode="numeric"` raises the number pad without the `type="number"`
- * spinner and its scroll-wheel accidents.
  */
 export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
   const { t } = useTranslation();
@@ -46,7 +54,9 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
   const firstFieldRef = useRef<HTMLInputElement>(null);
 
   // Rehydrate display from the stored canonical value whenever the question or
-  // unit changes (mount, resume, unit switch, back-navigation).
+  // unit changes — mount, resume, back-navigation, and unit switch. This is
+  // also what makes conversion-on-switch work: the switch only changes the
+  // unit id, and this recomputes the display in the new unit.
   useEffect(() => {
     if (!unit) return;
     if (storedCanonical === undefined || storedCanonical === '') {
@@ -73,6 +83,9 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
     firstFieldRef.current?.focus();
   }, [question.id]);
 
+  const inchesOverflow =
+    unit !== undefined && isComposite(unit.id) && inches.trim() !== '' && Number(inches) > MAX_INCHES;
+
   /** The value in the DISPLAY unit, or null when unusable. */
   const displayValue: number | null = useMemo(() => {
     if (!unit) return null;
@@ -81,7 +94,7 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
       const f = Number(feet || '0');
       const i = Number(inches || '0');
       if (!Number.isFinite(f) || !Number.isFinite(i)) return null;
-      if (i >= 12) return null; // 5'14" is a typo, not a height
+      if (i > MAX_INCHES) return null;
       return f * 12 + i;
     }
     if (display.trim() === '') return null;
@@ -98,7 +111,8 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
     displayValue >= unit.min &&
     displayValue <= unit.max;
 
-  const showError = touched && displayValue !== null && !inRange;
+  const rangeError = touched && displayValue !== null && !inRange;
+  const showError = rangeError || (touched && inchesOverflow);
 
   /** Converts to canonical and stores. Never stores a display value. */
   const commitValue = (next: number | null) => {
@@ -128,20 +142,30 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
       ? raw.replace(/[^0-9]/g, '')
       : raw.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
 
+  /**
+   * Switching unit KEEPS the measurement and re-presents it. Only the unit id
+   * changes; the rehydrate effect above converts the canonical value into the
+   * new unit's display form.
+   */
   const switchUnit = (next: MeasureUnit) => {
-    // Clearing rather than converting: silently reinterpreting 70 kg as 70 lb
-    // is a data-integrity bug, and converting behind the user's back makes the
-    // field feel possessed. An empty field is unambiguous.
-    setDisplay('');
-    setFeet('');
-    setInches('');
+    if (next.id === unitId) return;
     setTouched(false);
-    onChange(['', next.id]);
+    onChange([storedCanonical ?? '', next.id]);
     firstFieldRef.current?.focus();
   };
 
+  const hintMessage = () => {
+    if (!unit) return '';
+    if (touched && inchesOverflow) return t('validation.inchesRange', { max: MAX_INCHES });
+    if (rangeError) {
+      return t('measure.outOfRange', { min: unit.min, max: unit.max, unit: t(unit.labelKey) });
+    }
+    if (isComposite(unit.id)) return t('measure.heightHint');
+    return t('measure.range', { min: unit.min, max: unit.max, unit: t(unit.labelKey) });
+  };
+
   const fieldClass =
-    'min-w-0 flex-1 bg-transparent px-5 py-5 font-display text-[30px] font-bold text-chalk outline-none placeholder:font-body placeholder:text-[20px] placeholder:font-light placeholder:text-chalk-mute sm:text-[34px]';
+    'min-w-0 flex-1 bg-transparent px-4 py-5 font-display text-[28px] font-bold text-chalk outline-none placeholder:font-body placeholder:text-[19px] placeholder:font-light placeholder:text-chalk-mute sm:px-5 sm:text-[34px]';
 
   return (
     <div className="flex flex-col gap-5">
@@ -162,13 +186,14 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
                 value={feet}
                 aria-label={t('measure.feet')}
                 aria-invalid={showError}
+                aria-describedby={`${question.id}-hint`}
                 placeholder="5"
-                onChange={(e) => setFeet(e.target.value.replace(/[^0-9]/g, ''))}
+                onChange={(e) => setFeet(e.target.value.replace(/[^0-9]/g, '').slice(0, 1))}
                 onBlur={() => setTouched(true)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), submit())}
                 className={fieldClass}
               />
-              <span className="flex items-center pr-2 font-body text-[14px] text-chalk-dim">
+              <span className="flex items-center pr-1 font-body text-[13px] text-chalk-dim sm:pr-2 sm:text-[14px]">
                 {t('measure.feet')}
               </span>
               <input
@@ -178,13 +203,14 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
                 value={inches}
                 aria-label={t('measure.inches')}
                 aria-invalid={showError}
-                placeholder="9"
-                onChange={(e) => setInches(e.target.value.replace(/[^0-9]/g, ''))}
+                aria-describedby={`${question.id}-hint`}
+                placeholder="11"
+                onChange={(e) => setInches(e.target.value.replace(/[^0-9]/g, '').slice(0, 2))}
                 onBlur={() => setTouched(true)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), submit())}
                 className={fieldClass}
               />
-              <span className="flex items-center pr-4 font-body text-[14px] text-chalk-dim">
+              <span className="flex items-center pr-3 font-body text-[13px] text-chalk-dim sm:pr-4 sm:text-[14px]">
                 {t('measure.inches')}
               </span>
             </div>
@@ -210,7 +236,7 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
             <div
               role="radiogroup"
               aria-label={t('measure.unit')}
-              className="flex shrink-0 items-center gap-1 border-l border-white/10 p-2"
+              className="flex shrink-0 items-center gap-1 border-l border-white/10 p-1.5 sm:p-2"
             >
               {units.map((u) => {
                 const active = u.id === unitId;
@@ -222,7 +248,7 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
                     aria-checked={active}
                     onClick={() => switchUnit(u)}
                     className={[
-                      'min-w-[54px] rounded-md px-3 py-2.5 font-body text-[13px] font-semibold uppercase tracking-wide transition-colors',
+                      'min-w-[50px] rounded-md px-2.5 py-2.5 font-body text-[12.5px] font-semibold uppercase tracking-wide transition-colors sm:min-w-[56px] sm:px-3 sm:text-[13px]',
                       'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 focus-visible:ring-offset-carbon',
                       active ? 'bg-ember text-white' : 'text-chalk-dim hover:bg-white/5 hover:text-chalk',
                     ].join(' ')}
@@ -249,13 +275,7 @@ export function MeasureInput({ question, value, onChange, onSubmit }: Props) {
             showError ? 'text-ember' : 'text-chalk-mute',
           ].join(' ')}
         >
-          {unit
-            ? t(showError ? 'measure.outOfRange' : 'measure.range', {
-                min: unit.min,
-                max: unit.max,
-                unit: t(unit.labelKey),
-              })
-            : ''}
+          {hintMessage()}
         </p>
       </div>
 

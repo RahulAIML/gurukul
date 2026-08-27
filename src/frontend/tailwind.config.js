@@ -12,8 +12,11 @@ export default {
         chalk: { DEFAULT: '#FFFFFF', dim: '#9A9AA8', mute: '#6B6B78' },
       },
       fontFamily: {
-        display: ['Archivo', 'Inter', '-apple-system', 'sans-serif'],
-        body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+        // One family across the product. 'Noto Sans Devanagari' sits in the
+        // stack because Open Sans has no Devanagari coverage — without it the
+        // Hindi locale falls back to a browser default and looks unrelated.
+        display: ['"Open Sans"', '"Noto Sans Devanagari"', 'system-ui', 'sans-serif'],
+        body: ['"Open Sans"', '"Noto Sans Devanagari"', 'system-ui', 'sans-serif'],
       },
       maxWidth: { focus: '760px' },
     },

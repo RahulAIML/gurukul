@@ -55,6 +55,8 @@ import StyleMuscle from '../../../assets/illustrations/onboarding/training-style
 import StyleStrength from '../../../assets/illustrations/onboarding/training-style/style-strength.svg?react';
 
 /* motivation */
+import MotivationCalm from '../../../assets/illustrations/onboarding/motivation/motivation-calm.svg?react';
+import MotivationStress from '../../../assets/illustrations/onboarding/motivation/motivation-stress.svg?react';
 import MotivationConfidence from '../../../assets/illustrations/onboarding/motivation/motivation-confidence.svg?react';
 import MotivationConsistency from '../../../assets/illustrations/onboarding/motivation/motivation-consistency.svg?react';
 import MotivationHealth from '../../../assets/illustrations/onboarding/motivation/motivation-health.svg?react';
@@ -139,7 +141,9 @@ export const ILLUSTRATIONS = {
   'style-strength': StyleStrength,
 
   /* motivation */
+  'motivation-calm': MotivationCalm,
   'motivation-confidence': MotivationConfidence,
+  'motivation-stress': MotivationStress,
   'motivation-consistency': MotivationConsistency,
   'motivation-health': MotivationHealth,
   'motivation-look': MotivationLook,

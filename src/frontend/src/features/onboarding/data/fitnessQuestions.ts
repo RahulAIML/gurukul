@@ -372,10 +372,11 @@ export const fitnessQuestions: Question[] = [
     section: 'motivation',
     titleKey: 'q.motivation.title',
     helperKey: 'q.motivation.helper',
+    footnoteKey: 'q.motivation.wellbeingNote',
     type: 'single',
     columns: 3,
     rationale:
-      'Does not change the physical plan. It changes which progress the product surfaces first — someone chasing consistency should see streaks, someone chasing strength should see load. Kept because the wrong dashboard makes a correct plan feel irrelevant.',
+      'Does not change the physical plan. It changes which progress the product surfaces first — someone chasing consistency should see streaks, someone chasing strength should see load. Kept because the wrong dashboard makes a correct plan feel irrelevant. The two wellbeing options (stress, calm) are here because they are among the most common real reasons people train; they are treated as motivations, NOT as clinical conditions, and the footnote says so plainly.',
     options: [
       {
         id: 'look',
@@ -406,6 +407,18 @@ export const fitnessQuestions: Question[] = [
         labelKey: 'q.motivation.consistency',
         descriptionKey: 'q.motivation.consistency.desc',
         illustration: 'motivation-consistency',
+      },
+      {
+        id: 'stress',
+        labelKey: 'q.motivation.stress',
+        descriptionKey: 'q.motivation.stress.desc',
+        illustration: 'motivation-stress',
+      },
+      {
+        id: 'calm',
+        labelKey: 'q.motivation.calm',
+        descriptionKey: 'q.motivation.calm.desc',
+        illustration: 'motivation-calm',
       },
       {
         id: 'performance',

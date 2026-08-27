@@ -160,6 +160,12 @@ export function QuestionCard({
         </div>
       )}
 
+      {question.footnoteKey && (
+        <p className="mt-5 rounded-md border border-white/[0.08] bg-carbon-2 p-3.5 font-body text-[12px] font-light leading-relaxed text-chalk-mute">
+          {t(question.footnoteKey)}
+        </p>
+      )}
+
       {/* Multi-select needs an explicit commit; single-choice auto-advances. */}
       {isMulti && (
         <div className="sticky bottom-0 mt-7 -mx-5 border-t border-white/[0.08] bg-carbon/92 px-5 py-4 backdrop-blur sm:-mx-8 sm:px-8">

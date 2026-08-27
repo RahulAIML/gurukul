@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../../../i18n';
-import { LanguageToggle } from './LanguageToggle';
+import { LanguageSelector } from './LanguageSelector';
 import { ProgressBar, ProgressIndicator } from './ProgressIndicator';
 
 interface Props {
@@ -46,7 +46,7 @@ export function OnboardingLayout({ step, total, onBack, children }: Props) {
             {step !== undefined && total !== undefined && (
               <ProgressIndicator current={step} total={total} />
             )}
-            <LanguageToggle />
+            <LanguageSelector />
           </div>
         </div>
         {step !== undefined && total !== undefined && (

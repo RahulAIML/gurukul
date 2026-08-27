@@ -4,7 +4,7 @@ import { useTranslation } from '../i18n';
 import { track } from '../features/analytics';
 import { AuthForm } from '../features/auth/components/AuthForm';
 import { BrandMark } from '../features/onboarding/components/OnboardingLayout';
-import { LanguageToggle } from '../features/onboarding/components/LanguageToggle';
+import { LanguageSelector } from '../features/onboarding/components/LanguageSelector';
 
 /**
  * Sign-up and log-in share a page shell: same layout, same shell chrome, only
@@ -30,7 +30,7 @@ export function AuthPage({ mode }: { mode: 'signup' | 'login' }) {
               {t('brand.name')}
             </span>
           </Link>
-          <LanguageToggle />
+          <LanguageSelector />
         </div>
       </header>
 

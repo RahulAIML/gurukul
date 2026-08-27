@@ -1,0 +1,13 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — motivation/motivation-calm
+       Concentric rings settling inward: steadiness and a clearer head.
+       Hand-authored (abstract subject, no figure armature to share).
+       Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="80" cy="78" r="46" stroke="var(--ill-neutral)" stroke-width="7" opacity="0.35" fill="none"/>
+  <circle cx="80" cy="78" r="31" stroke="var(--ill-neutral)" stroke-width="7" opacity="0.55" fill="none"/>
+  <circle cx="80" cy="78" r="16" fill="currentColor"/>
+  <path d="M70 70 C67 74 67 82 70 86" stroke="#FFFFFF" stroke-opacity="0.28" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M30 132 h100" stroke="currentColor" stroke-width="7" stroke-linecap="round" opacity="0.5"/>
+</svg>

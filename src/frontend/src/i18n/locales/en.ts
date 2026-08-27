@@ -166,6 +166,11 @@ export const en = {
   'q.motivation.confidence.desc': 'How you carry yourself',
   'q.motivation.consistency': 'Become consistent',
   'q.motivation.consistency.desc': 'Showing up is the win',
+  'q.motivation.stress': "Manage stress",
+  'q.motivation.stress.desc': "Somewhere to put the pressure of the day",
+  'q.motivation.calm': "Feel calmer",
+  'q.motivation.calm.desc': "A steadier head and better sleep",
+  'q.motivation.wellbeingNote': "Training can support how you feel, but it is not a substitute for professional mental health care. If you are struggling, please talk to a clinician.",
   'q.motivation.performance': 'Improve performance',
   'q.motivation.performance.desc': 'Sport or specific ability',
 
@@ -191,6 +196,8 @@ export const en = {
 
   'measure.range': 'Between {min} and {max} {unit}',
   'measure.outOfRange': 'Enter a value between {min} and {max} {unit}',
+  'measure.heightHint': 'Feet and inches. Switching units keeps your measurement.',
+  'validation.inchesRange': 'Inches must be between 0 and {max}',
   'measure.unit': 'Unit',
   'measure.unit.years': 'yrs',
   'measure.unit.cm': 'cm',

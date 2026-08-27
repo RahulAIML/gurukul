@@ -82,6 +82,9 @@ export interface Question {
   section: QuestionSection;
   titleKey: TranslationKey;
   helperKey?: TranslationKey;
+  /** Small print under the options. Used where a question needs a caveat that
+   *  does not belong in the helper line. */
+  footnoteKey?: TranslationKey;
   type: QuestionType;
   /** Absent for `measure` questions, which render a field rather than choices. */
   options?: QuestionOption[];

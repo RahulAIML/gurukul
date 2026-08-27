@@ -172,6 +172,11 @@ export const hi: Record<TranslationKey, string> = {
   'q.motivation.confidence.desc': 'आपके व्यक्तित्व में झलक',
   'q.motivation.consistency': 'नियमित बनना',
   'q.motivation.consistency.desc': 'लगातार आना ही जीत है',
+  'q.motivation.stress': "तनाव कम करना",
+  'q.motivation.stress.desc': "दिन का दबाव कहीं निकालने की जगह",
+  'q.motivation.calm': "शांत महसूस करना",
+  'q.motivation.calm.desc': "स्थिर मन और बेहतर नींद",
+  'q.motivation.wellbeingNote': "ट्रेनिंग आपके मन को सहारा दे सकती है, पर यह पेशेवर मानसिक स्वास्थ्य देखभाल का विकल्प नहीं है। परेशानी हो तो कृपया किसी विशेषज्ञ से बात करें।",
   'q.motivation.performance': 'प्रदर्शन सुधारना',
   'q.motivation.performance.desc': 'खेल या कोई ख़ास क्षमता',
 
@@ -197,6 +202,8 @@ export const hi: Record<TranslationKey, string> = {
 
   'measure.range': '{min} और {max} {unit} के बीच',
   'measure.outOfRange': '{min} और {max} {unit} के बीच का मान डालें',
+  'measure.heightHint': 'फुट और इंच। इकाई बदलने पर आपका माप बना रहता है।',
+  'validation.inchesRange': 'इंच 0 और {max} के बीच होना चाहिए',
   'measure.unit': 'इकाई',
   'measure.unit.years': 'वर्ष',
   'measure.unit.cm': 'सेमी',

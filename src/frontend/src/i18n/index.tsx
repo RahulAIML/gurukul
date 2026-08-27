@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from 'react';
 import { en, type TranslationKey } from './locales/en';
+import { es } from './locales/es';
 import { hi } from './locales/hi';
 
 /**
@@ -15,7 +16,7 @@ import { hi } from './locales/hi';
  *
  * A library (i18next and friends) buys plural rules, ICU message syntax, lazy
  * namespace loading and a formatting pipeline. This product currently needs
- * lookup plus `{placeholder}` substitution across ~200 keys and two locales,
+ * lookup plus `{placeholder}` substitution across ~250 keys and three locales,
  * so a library would be ~40 KB of runtime to solve a problem we do not have
  * yet. The public surface here — `useTranslation()` returning `t`, `locale`,
  * `setLocale` — is the same shape those libraries expose, so swapping one in
@@ -26,9 +27,21 @@ import { hi } from './locales/hi';
  */
 
 export const LOCALES = {
-  en: { label: 'English', short: 'EN', dict: en, dir: 'ltr' as const },
-  hi: { label: 'हिन्दी', short: 'हिं', dict: hi, dir: 'ltr' as const },
-} satisfies Record<string, { label: string; short: string; dict: Record<TranslationKey, string>; dir: 'ltr' | 'rtl' }>;
+  en: { label: 'English', short: 'EN', flag: '🇬🇧', dict: en, dir: 'ltr' as const },
+  es: { label: 'Español', short: 'ES', flag: '🇪🇸', dict: es, dir: 'ltr' as const },
+  hi: { label: 'हिन्दी', short: 'हिं', flag: '🇮🇳', dict: hi, dir: 'ltr' as const },
+} satisfies Record<
+  string,
+  {
+    /** The language's OWN name. Never translated — a user who cannot read the
+     *  current language must still recognise theirs. */
+    label: string;
+    short: string;
+    flag: string;
+    dict: Record<TranslationKey, string>;
+    dir: 'ltr' | 'rtl';
+  }
+>;
 
 export type Locale = keyof typeof LOCALES;
 
