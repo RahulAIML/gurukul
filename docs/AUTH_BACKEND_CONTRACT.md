@@ -196,3 +196,56 @@ No secret belongs in any `VITE_` variable. Anything so prefixed is readable by e
 - Email verification before treating an address as confirmed.
 - Audit logging of auth events.
 - Account deletion, and what happens to `OnboardingResponse` rows on deletion.
+
+---
+
+## 11. Status as of the header-auth phase
+
+The service in `src/backend` now implements sections 1–9 of this contract and
+passes 44 integration tests. The frontend auth module talks to it through
+`AuthAdapter`, and the whole flow — sign up, log in, log out, password reset,
+session restore, onboarding association — has been verified end to end against
+the running service (53 browser assertions).
+
+### What is wired
+
+| Piece | Endpoint | Status |
+|---|---|---|
+| Sign up (with optional display name) | `POST /auth/signup` | implemented |
+| Log in | `POST /auth/login` | implemented |
+| Session restore / rotation | `POST /auth/refresh` | implemented |
+| Log out | `POST /auth/logout` | implemented |
+| Password reset request | `POST /auth/password-reset` | endpoint implemented, **no mail transport** |
+| Onboarding association | `PUT /me/onboarding` | implemented |
+| Derived profile | `GET /me/onboarding` | implemented |
+
+### What still has to be connected
+
+1. **`VITE_API_URL` is not set in the Vercel project.** Until it is, the app
+   selects `notConfiguredAdapter`: the header, both forms and all validation
+   render, and submitting says plainly that accounts are not available yet.
+   Setting the variable is the entire switch-over — no code change.
+2. **A mail transport.** `requestPasswordReset` currently revokes the user's
+   sessions and returns success without sending anything. It must not be
+   advertised as working until a transport exists.
+3. **A MongoDB instance.** `MONGODB_URI` has to point at a real cluster; the
+   test suite and the local harness use an in-memory server.
+4. **Google OAuth.** `supportsGoogle` is `false`, so the button does not
+   render at all. Flip it only when the callback actually exists.
+
+### Two constraints discovered while wiring this up
+
+**Refresh must be single-flight on the client.** The backend rotates the
+refresh token on every use and treats reuse of a rotated token as theft,
+revoking every session for that user. That is correct, and it means two
+concurrent refreshes log the user out of everywhere. React StrictMode's double
+effect invocation triggered exactly this. `httpApi.ts` therefore shares one
+in-flight refresh promise across all callers. Any future client must do the
+same.
+
+**The sync payload carries the question type and canonical unit.** A stored
+answer is only strings — `['180.3', 'cm']` and `['dumbbells', 'basic']` are
+indistinguishable without the schema. The client sends `type` and
+`canonicalUnit` so the server can confirm it is storing centimetres rather
+than silently treating an inch value as one. Only the canonical value is ever
+sent; the unit the user happened to type in is not part of their profile.

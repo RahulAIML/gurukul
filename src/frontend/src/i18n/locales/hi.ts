@@ -26,6 +26,7 @@ export const hi: Record<TranslationKey, string> = {
   'common.selectAllThatApply': 'जो लागू हों सब चुनें',
   'common.loading': 'लोड हो रहा है…',
   'common.or': 'या',
+  'common.optional': 'वैकल्पिक',
 
   /* ── language ────────────────────────────────────────────────── */
   'language.label': 'भाषा',
@@ -311,4 +312,33 @@ export const hi: Record<TranslationKey, string> = {
   'auth.error.notConfigured':
     'इस संस्करण में खाते अभी उपलब्ध नहीं हैं — प्रमाणीकरण बैकएंड अभी बन रहा है। तब तक आपके जवाब इसी डिवाइस पर सुरक्षित हैं।',
   'auth.notConfigured.badge': 'अभी उपलब्ध नहीं',
+
+  'auth.signUp': 'साइन अप',
+  'auth.name': 'नाम',
+  'auth.backToLogIn': 'लॉग इन पर वापस',
+  'auth.error.nameTooLong': 'कृपया 80 अक्षर या उससे कम रखें',
+  'auth.error.confirmRequired': 'कृपया पासवर्ड की पुष्टि करें',
+  'auth.signup.carryAnswers':
+    'अब तक के आपके {count} जवाब आपके खाते में सुरक्षित हो जाएँगे। कुछ नहीं खोएगा।',
+  'auth.reset.title': 'पासवर्ड फिर से सेट करें',
+  'auth.reset.subtitle': 'नया पासवर्ड चुनने का लिंक हम आपको ईमेल कर देंगे।',
+  'auth.reset.action': 'लिंक भेजें',
+  'auth.reset.hint': 'वही ईमेल जिससे आपने खाता बनाया था',
+  'auth.reset.sentTitle': 'अपना ईमेल देखें',
+  'auth.reset.sentBody':
+    'अगर {email} के लिए कोई खाता है, तो लिंक भेजा जा चुका है। यह लिंक एक घंटे में समाप्त हो जाएगा।',
+
+  /* ── खाता मेनू ────────────────────────────────────────────────── */
+  'account.menuLabel': 'खाता',
+  'account.profile': 'मेरी प्रोफ़ाइल',
+  'account.plan': 'मेरा प्लान',
+  'account.settings': 'सेटिंग्स',
+  'account.memberSince': 'सदस्य बने',
+  'account.answersSaved': 'सुरक्षित जवाब',
+  'account.viewResults': 'मेरे नतीजे देखें',
+  'account.inDevelopment.badge': 'बन रहा है',
+  'account.plan.inDevelopment':
+    'आपका ट्रेनिंग प्लान अभी तैयार नहीं हुआ है। सवाल और आपके नतीजे पहला कदम हैं; प्लान आगे के रिलीज़ में आएगा।',
+  'account.settings.inDevelopment':
+    'खाता सेटिंग्स अभी बन रही हैं। तब तक भाषा किसी भी स्क्रीन के हेडर से बदली जा सकती है।',
 };

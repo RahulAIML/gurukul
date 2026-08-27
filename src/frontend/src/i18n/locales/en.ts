@@ -20,6 +20,7 @@ export const en = {
   'common.selectAllThatApply': 'Select all that apply',
   'common.loading': 'Loading…',
   'common.or': 'or',
+  'common.optional': 'Optional',
 
   /* ── language ────────────────────────────────────────────────── */
   'language.label': 'Language',
@@ -306,6 +307,35 @@ export const en = {
   'auth.error.notConfigured':
     'Accounts are not available in this build yet — the authentication backend is still being built. Your answers are saved on this device in the meantime.',
   'auth.notConfigured.badge': 'Not yet available',
+
+  'auth.signUp': 'Sign Up',
+  'auth.name': 'Name',
+  'auth.backToLogIn': 'Back to log in',
+  'auth.error.nameTooLong': 'Please use 80 characters or fewer',
+  'auth.error.confirmRequired': 'Please confirm your password',
+  'auth.signup.carryAnswers':
+    'Your {count} answers so far will be saved to your account. Nothing is lost.',
+  'auth.reset.title': 'Reset your password',
+  'auth.reset.subtitle': 'We will email you a link to choose a new one.',
+  'auth.reset.action': 'Send reset link',
+  'auth.reset.hint': 'The address you signed up with',
+  'auth.reset.sentTitle': 'Check your email',
+  'auth.reset.sentBody':
+    'If an account exists for {email}, a reset link is on its way. The link expires in one hour.',
+
+  /* ── account menu ─────────────────────────────────────────────── */
+  'account.menuLabel': 'Account',
+  'account.profile': 'My Profile',
+  'account.plan': 'My Plan',
+  'account.settings': 'Settings',
+  'account.memberSince': 'Member since',
+  'account.answersSaved': 'Answers saved',
+  'account.viewResults': 'View my results',
+  'account.inDevelopment.badge': 'In development',
+  'account.plan.inDevelopment':
+    'Your training plan is not generated yet. The questionnaire and your results are the first step; the plan itself arrives in a later release.',
+  'account.settings.inDevelopment':
+    'Account settings are still being built. Language can be changed from the header on any screen in the meantime.',
 } as const;
 
 export type TranslationKey = keyof typeof en;

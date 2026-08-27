@@ -33,4 +33,9 @@ export const notConfiguredAdapter: AuthAdapter = {
   async requestPasswordReset() {
     throw new AuthError('not_configured');
   },
+  async syncOnboarding() {
+    // Refuses rather than reporting success, so the caller keeps the local
+    // answers instead of clearing them on a sync that never happened.
+    throw new AuthError('not_configured');
+  },
 };

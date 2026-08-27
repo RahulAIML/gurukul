@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { BrandMark } from '../features/onboarding/components/OnboardingLayout';
 import { LanguageSelector } from '../features/onboarding/components/LanguageSelector';
+import { HeaderAuth } from '../features/auth/components/HeaderAuth';
 import { useTranslation } from '../i18n';
 
 /**
@@ -22,8 +23,9 @@ export function GymLanding() {
         className="ember-glow pointer-events-none absolute left-1/2 top-[-380px] h-[860px] w-[980px] -translate-x-1/2"
       />
 
-      <div className="relative flex justify-end px-5 pt-5 sm:px-8">
+      <div className="relative flex items-center justify-end gap-2 px-5 pt-5 sm:gap-3 sm:px-8">
         <LanguageSelector />
+        <HeaderAuth />
       </div>
 
       <main className="relative flex flex-1 flex-col items-center justify-center px-6 py-12 text-center">

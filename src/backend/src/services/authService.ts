@@ -8,6 +8,8 @@ import { issueRefreshToken, revokeAllSessions, signAccessToken } from './tokenSe
 export interface PublicUser {
   id: string;
   email: string;
+  /** Display name. Empty string when the user did not give one. */
+  name: string;
   createdAt: string;
 }
 
@@ -21,6 +23,7 @@ export interface AuthResult {
 const toPublic = (doc: UserDoc): PublicUser => ({
   id: String(doc._id),
   email: doc.email,
+  name: doc.name ?? '',
   createdAt: (doc.createdAt as Date | undefined)?.toISOString() ?? new Date().toISOString(),
 });
 
@@ -41,6 +44,7 @@ async function getDummyHash(cost: number): Promise<string> {
 export async function signUp(
   email: string,
   password: string,
+  name?: string,
   userAgent?: string,
 ): Promise<AuthResult> {
   const env = loadEnv();
@@ -53,7 +57,11 @@ export async function signUp(
 
   let created: UserDoc;
   try {
-    created = (await User.create({ email: normalised, passwordHash })) as unknown as UserDoc;
+    created = (await User.create({
+      email: normalised,
+      passwordHash,
+      name: name?.trim() ?? '',
+    })) as unknown as UserDoc;
   } catch (err: unknown) {
     // Two simultaneous signups for the same address both pass the check above;
     // the unique index is what actually decides. Translate rather than 500.

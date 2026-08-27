@@ -1,4 +1,10 @@
-import { AuthError, type AuthAdapter, type AuthErrorCode, type AuthUser } from '../types';
+import {
+  AuthError,
+  type AuthAdapter,
+  type AuthErrorCode,
+  type AuthUser,
+  type OnboardingSyncResult,
+} from '../types';
 
 /**
  * The adapter for the real backend, written against
@@ -62,14 +68,28 @@ interface AuthResponse {
   accessToken: string;
 }
 
-export const httpApiAdapter: AuthAdapter = {
-  id: 'http-api',
-  isConfigured: Boolean(API),
-  // Flip on once the backend exposes the OAuth callback. Faking it would be
-  // worse than not offering it.
-  supportsGoogle: false,
+/**
+ * Refresh is SINGLE-FLIGHT, and it has to be.
+ *
+ * The backend rotates the refresh token on every use and treats a second use
+ * of a rotated token as theft — it revokes every session for that user. That
+ * is the right behaviour, and it means the client must never issue two
+ * refreshes concurrently: the second one presents a token the first already
+ * superseded, and the user is logged out of everywhere by their own app.
+ *
+ * This is not hypothetical. React's StrictMode double-invokes effects in
+ * development, so the provider mounted twice and immediately locked itself
+ * out. Two tabs waking from sleep together would do the same in production.
+ *
+ * So every caller shares one in-flight promise, and it is cleared only once
+ * settled.
+ */
+let inFlightRefresh: Promise<AuthUser | null> | null = null;
 
-  async restore() {
+function refresh(): Promise<AuthUser | null> {
+  if (inFlightRefresh) return inFlightRefresh;
+
+  const pending = (async () => {
     try {
       const { user, accessToken: token } = await call<AuthResponse>('/auth/refresh', {
         method: 'POST',
@@ -79,12 +99,38 @@ export const httpApiAdapter: AuthAdapter = {
     } catch {
       return null;
     }
+  })();
+
+  inFlightRefresh = pending;
+  // Released once settled, so a failed refresh does not poison later attempts
+  // with a permanently resolved-null promise. Held in a local as well, so the
+  // caller gets the promise regardless of when the release runs.
+  void pending.finally(() => {
+    if (inFlightRefresh === pending) inFlightRefresh = null;
+  });
+  return pending;
+}
+
+export const httpApiAdapter: AuthAdapter = {
+  id: 'http-api',
+  isConfigured: Boolean(API),
+  // Flip on once the backend exposes the OAuth callback. Faking it would be
+  // worse than not offering it.
+  supportsGoogle: false,
+
+  restore() {
+    return refresh();
   },
 
-  async signUp(credentials) {
+  async signUp(input) {
+    // `name` is omitted rather than sent empty when the user skipped it, so
+    // the backend stores an absent name instead of a blank one.
+    const body = input.name?.trim()
+      ? { email: input.email, password: input.password, name: input.name.trim() }
+      : { email: input.email, password: input.password };
     const { user, accessToken: token } = await call<AuthResponse>('/auth/signup', {
       method: 'POST',
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(body),
     });
     accessToken = token;
     return user;
@@ -111,6 +157,15 @@ export const httpApiAdapter: AuthAdapter = {
     await call('/auth/password-reset', {
       method: 'POST',
       body: JSON.stringify({ email }),
+    });
+  },
+
+  async syncOnboarding(responses, locale) {
+    // PUT, not POST: sending the same answers twice must leave one profile,
+    // not two. The backend upserts on {userId, questionId}.
+    return call<OnboardingSyncResult>('/me/onboarding', {
+      method: 'PUT',
+      body: JSON.stringify({ responses, locale }),
     });
   },
 };

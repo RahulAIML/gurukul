@@ -1,6 +1,7 @@
 import { Router, type RequestHandler } from 'express';
 import {
   credentialsSchema,
+  signUpSchema,
   emailOnlySchema,
   getMe,
   postLogIn,
@@ -35,7 +36,7 @@ router.get('/health', (_req, res) => {
 });
 
 /* ── auth ────────────────────────────────────────────────────────── */
-router.post('/auth/signup', authLimiter, validateBody(credentialsSchema), wrap(postSignUp));
+router.post('/auth/signup', authLimiter, validateBody(signUpSchema), wrap(postSignUp));
 router.post('/auth/login', authLimiter, validateBody(credentialsSchema), wrap(postLogIn));
 // No body to validate and no rate limit keyed on email — refresh is driven by
 // the cookie, and limiting it would log out active users under load.

@@ -25,6 +25,7 @@ export const es: Record<TranslationKey, string> = {
   'common.selectAllThatApply': 'Selecciona todas las que apliquen',
   'common.loading': 'Cargando…',
   'common.or': 'o',
+  'common.optional': 'Opcional',
 
   /* ── language ────────────────────────────────────────────────── */
   'language.label': 'Idioma',
@@ -313,4 +314,33 @@ export const es: Record<TranslationKey, string> = {
   'auth.error.notConfigured':
     'Las cuentas aún no están disponibles en esta versión: el servicio de autenticación se está construyendo. Mientras tanto tus respuestas se guardan en este dispositivo.',
   'auth.notConfigured.badge': 'Aún no disponible',
+
+  'auth.signUp': 'Crear cuenta',
+  'auth.name': 'Nombre',
+  'auth.backToLogIn': 'Volver a iniciar sesión',
+  'auth.error.nameTooLong': 'Usa 80 caracteres o menos',
+  'auth.error.confirmRequired': 'Confirma tu contraseña',
+  'auth.signup.carryAnswers':
+    'Tus {count} respuestas se guardarán en tu cuenta. No se pierde nada.',
+  'auth.reset.title': 'Restablece tu contraseña',
+  'auth.reset.subtitle': 'Te enviaremos un enlace por correo para elegir una nueva.',
+  'auth.reset.action': 'Enviar enlace',
+  'auth.reset.hint': 'El correo con el que te registraste',
+  'auth.reset.sentTitle': 'Revisa tu correo',
+  'auth.reset.sentBody':
+    'Si existe una cuenta para {email}, el enlace ya está en camino. Caduca en una hora.',
+
+  /* ── account menu ─────────────────────────────────────────────── */
+  'account.menuLabel': 'Cuenta',
+  'account.profile': 'Mi perfil',
+  'account.plan': 'Mi plan',
+  'account.settings': 'Ajustes',
+  'account.memberSince': 'Miembro desde',
+  'account.answersSaved': 'Respuestas guardadas',
+  'account.viewResults': 'Ver mis resultados',
+  'account.inDevelopment.badge': 'En desarrollo',
+  'account.plan.inDevelopment':
+    'Tu plan de entrenamiento aún no se ha generado. El cuestionario y tus resultados son el primer paso; el plan llegará en una versión posterior.',
+  'account.settings.inDevelopment':
+    'Los ajustes de la cuenta todavía se están construyendo. Mientras tanto puedes cambiar el idioma desde la cabecera en cualquier pantalla.',
 };

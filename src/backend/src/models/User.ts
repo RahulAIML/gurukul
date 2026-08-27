@@ -16,6 +16,10 @@ const userSchema = new Schema(
       trim: true,
       index: true,
     },
+    // Display name only — it is greeted in the header, never used to identify
+    // an account. Optional because an account is valid without one, and a
+    // required "real name" field is a barrier with no security value.
+    name: { type: String, trim: true, maxlength: 80, default: '' },
     // `select: false` so a stray `User.findOne()` cannot pull the hash into
     // scope where it might be serialised.
     passwordHash: { type: String, required: true, select: false },

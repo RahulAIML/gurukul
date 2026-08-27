@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 import { useTranslation } from '../../../i18n';
+import { HeaderAuth } from '../../auth/components/HeaderAuth';
 import { LanguageSelector } from './LanguageSelector';
 import { ProgressBar, ProgressIndicator } from './ProgressIndicator';
 
@@ -42,11 +43,17 @@ export function OnboardingLayout({ step, total, onBack, children }: Props) {
             <span className="font-display text-[15px] font-extrabold uppercase tracking-[0.22em] text-chalk">{t('brand.name')}</span>
           </Link>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
+            {/* The step counter is the first thing to go on a narrow header:
+                the progress bar underneath already carries the same
+                information, so the auth action keeps the space instead. */}
             {step !== undefined && total !== undefined && (
-              <ProgressIndicator current={step} total={total} />
+              <span className="hidden sm:inline">
+                <ProgressIndicator current={step} total={total} />
+              </span>
             )}
             <LanguageSelector />
+            <HeaderAuth />
           </div>
         </div>
         {step !== undefined && total !== undefined && (

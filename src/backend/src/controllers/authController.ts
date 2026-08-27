@@ -46,9 +46,19 @@ const credentials = z.object({
   password: z.string().min(8).max(200),
 });
 
+/**
+ * Sign-up additionally accepts a display name. It is optional and capped, not
+ * validated for shape — there is no such thing as an invalid human name, and
+ * rejecting one is how software insults people.
+ */
+const signUpBody = credentials.extend({
+  name: z.string().trim().max(80).optional(),
+});
+
 const emailOnly = z.object({ email: z.string().trim().min(1).email() });
 
 export const credentialsSchema = credentials;
+export const signUpSchema = signUpBody;
 export const emailOnlySchema = emailOnly;
 
 function send(res: Response, result: AuthResult, status: number) {
@@ -59,8 +69,8 @@ function send(res: Response, result: AuthResult, status: number) {
 }
 
 export async function postSignUp(req: Request, res: Response) {
-  const { email, password } = credentials.parse(req.body);
-  const result = await signUp(email, password, req.headers['user-agent']);
+  const { email, password, name } = signUpBody.parse(req.body);
+  const result = await signUp(email, password, name, req.headers['user-agent']);
   send(res, result, 201);
 }
 

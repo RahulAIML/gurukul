@@ -164,6 +164,50 @@ describe('signup', () => {
     expect(res.status).toBe(422);
     expect(res.body.fields).toHaveProperty('email');
   });
+
+  it('stores an optional display name and returns it', async () => {
+    const c = creds();
+    const res = await request(app)
+      .post('/api/v1/auth/signup')
+      .send({ ...c, name: '  Priya Raghavan  ' });
+    expect(res.status).toBe(201);
+    // Trimmed on the way in, so a stray space cannot become part of the name.
+    expect(res.body.user.name).toBe('Priya Raghavan');
+  });
+
+  it('treats the name as optional, not absent', async () => {
+    const { res } = await signUp();
+    // Empty string rather than undefined: the UI can render it without a
+    // null check, and JSON round-trips it unchanged.
+    expect(res.body.user.name).toBe('');
+  });
+
+  it('accepts a name that is not a Latin-script two-part name', async () => {
+    // There is no such thing as an invalid human name. This asserts we do not
+    // regress into "first and last name" validation.
+    for (const name of ['बुद्धदेब', 'Иван', '李', "O'Brien-Nakamura", 'Prince']) {
+      const res = await request(app)
+        .post('/api/v1/auth/signup')
+        .send({ ...creds(), name });
+      expect(res.status).toBe(201);
+      expect(res.body.user.name).toBe(name);
+    }
+  });
+
+  it('rejects a name longer than the column allows', async () => {
+    const res = await request(app)
+      .post('/api/v1/auth/signup')
+      .send({ ...creds(), name: 'x'.repeat(81) });
+    expect(res.status).toBe(422);
+    expect(res.body.fields).toHaveProperty('name');
+  });
+
+  it('never returns the name field back through the password hash', async () => {
+    const { res } = await signUp();
+    expect(Object.keys(res.body.user).sort()).toEqual(
+      ['createdAt', 'email', 'id', 'name'].sort(),
+    );
+  });
 });
 
 describe('login', () => {

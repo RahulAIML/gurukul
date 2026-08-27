@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '../features/auth/AuthProvider';
 import { fitnessQuestions } from '../features/onboarding/data/fitnessQuestions';
 import { I18nProvider } from '../i18n';
+import { Account } from '../pages/Account';
 import { Analysis } from '../pages/Analysis';
 import { AuthPage } from '../pages/AuthPage';
 import { GymLanding } from '../pages/GymLanding';
@@ -26,6 +27,9 @@ export default function App() {
           <Route path="/gym/onboarding/:questionId" element={<GymOnboarding />} />
           <Route path="/signup" element={<AuthPage mode="signup" />} />
           <Route path="/login" element={<AuthPage mode="login" />} />
+          <Route path="/reset-password" element={<AuthPage mode="reset" />} />
+          <Route path="/account" element={<Navigate to="/account/profile" replace />} />
+          <Route path="/account/:section" element={<Account />} />
           {/* design-review surface, not part of the funnel */}
           <Route path="/design/illustrations" element={<IllustrationReview />} />
           <Route path="*" element={<Navigate to="/" replace />} />
