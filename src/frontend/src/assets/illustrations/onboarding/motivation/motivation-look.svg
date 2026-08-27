@@ -1,0 +1,13 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — motivation/motivation-look
+       A figure reflected in a frame: visible change in the mirror.
+       Hand-authored (abstract subject, no figure armature to share).
+       Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <rect x="46" y="24" width="68" height="102" rx="34" stroke="var(--ill-neutral)" stroke-width="7" opacity="0.55" fill="none"/>
+  <path d="M62 126 V70 C62 58 70 50 80 50 C90 50 98 58 98 70 v56" fill="currentColor"/>
+  <ellipse cx="80" cy="40" rx="9" ry="10" fill="currentColor"/>
+  <path d="M66 72 C64 82 64 100 66 116" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="3" stroke-linecap="round"/>
+  <path d="M120 40 l4 -10 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 Z" fill="var(--ill-neutral)" opacity="0.5"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — motivation/motivation-health
+       A pulse crossing a ring: energy, sleep, long-term wellbeing. No heart shape — it would read medical.
+       Hand-authored (abstract subject, no figure armature to share).
+       Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <circle cx="80" cy="80" r="44" stroke="var(--ill-neutral)" stroke-width="10" opacity="0.4" fill="none"/>
+  <path d="M34 80 h18 l9 -26 l12 48 l9 -22 h24" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M40 74 h10" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="3" stroke-linecap="round"/>
+</svg>

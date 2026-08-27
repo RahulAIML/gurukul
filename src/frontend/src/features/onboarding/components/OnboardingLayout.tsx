@@ -1,5 +1,7 @@
 import type { ReactNode } from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from '../../../i18n';
+import { LanguageToggle } from './LanguageToggle';
 import { ProgressBar, ProgressIndicator } from './ProgressIndicator';
 
 interface Props {
@@ -27,6 +29,7 @@ export function BrandMark({ size = 26 }: { size?: number }) {
  * content column that never goes full-bleed on desktop.
  */
 export function OnboardingLayout({ step, total, onBack, children }: Props) {
+  const { t } = useTranslation();
   return (
     <div className="grid-faint flex min-h-[100dvh] flex-col bg-carbon">
       <header className="border-b border-white/[0.07] bg-carbon/85 backdrop-blur">
@@ -36,12 +39,15 @@ export function OnboardingLayout({ step, total, onBack, children }: Props) {
             className="flex items-center gap-2.5 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 focus-visible:ring-offset-carbon"
           >
             <BrandMark size={24} />
-            <span className="font-display text-[15px] tracking-[0.22em] text-chalk">GURUKUL</span>
+            <span className="font-display text-[15px] font-extrabold uppercase tracking-[0.22em] text-chalk">{t('brand.name')}</span>
           </Link>
 
-          {step !== undefined && total !== undefined && (
-            <ProgressIndicator current={step} total={total} />
-          )}
+          <div className="flex items-center gap-3">
+            {step !== undefined && total !== undefined && (
+              <ProgressIndicator current={step} total={total} />
+            )}
+            <LanguageToggle />
+          </div>
         </div>
         {step !== undefined && total !== undefined && (
           <ProgressBar current={step} total={total} />
@@ -59,7 +65,7 @@ export function OnboardingLayout({ step, total, onBack, children }: Props) {
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <polyline points="15 18 9 12 15 6" />
               </svg>
-              Back
+              {t('common.back')}
             </button>
           )}
           {children}

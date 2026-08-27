@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslation } from '../../../i18n';
 import { IllustrationOption } from './IllustrationOption';
 import { MeasureInput } from './MeasureInput';
-import type { Question } from '../types/onboarding.types';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import type { Question, QuestionSection } from '../types/onboarding.types';
+import type { TranslationKey } from '../../../i18n';
 
 interface Props {
   question: Question;
@@ -21,6 +23,19 @@ const COLUMN_CLASS: Record<2 | 3, string> = {
   3: 'sm:grid-cols-2 lg:grid-cols-3',
 };
 
+const SECTION_KEY: Record<QuestionSection, TranslationKey> = {
+  profile: 'section.profile',
+  goal: 'section.goal',
+  experience: 'section.experience',
+  environment: 'section.environment',
+  equipment: 'section.equipment',
+  time: 'section.time',
+  preference: 'section.preference',
+  motivation: 'section.motivation',
+  lifestyle: 'section.lifestyle',
+  measurements: 'section.measurements',
+};
+
 /**
  * Renders any question from the schema. This is the whole engine — adding a
  * question to `fitnessQuestions.ts` needs no change here; adding a new
@@ -36,6 +51,7 @@ export function QuestionCard({
   onMeasureChange,
   onContinue,
 }: Props) {
+  const { t } = useTranslation();
   const reduced = useReducedMotion();
   const headingRef = useRef<HTMLHeadingElement>(null);
   const optionRefs = useRef<(HTMLButtonElement | null)[]>([]);
@@ -47,9 +63,9 @@ export function QuestionCard({
   const canContinue = selectedIds.length >= minSelections;
 
   // Move focus to the new question so keyboard and screen-reader users are
-  // carried forward with the visual transition rather than left behind.
+  // carried forward with the visual transition. MeasureInput focuses its own
+  // field, which is the more useful target there.
   useEffect(() => {
-    // MeasureInput focuses its own field, which is the more useful target there.
     if (!isMeasure) headingRef.current?.focus();
   }, [question.id, isMeasure]);
 
@@ -62,10 +78,11 @@ export function QuestionCard({
       event.preventDefault();
 
       const count = options.length;
-      const activeIndex = optionRefs.current.findIndex((el) => el === document.activeElement);
-      const currentIndex = activeIndex >= 0
-        ? activeIndex
-        : Math.max(0, options.findIndex((o) => selectedIds.includes(o.id)));
+      const activeIdx = optionRefs.current.findIndex((el) => el === document.activeElement);
+      const currentIndex =
+        activeIdx >= 0
+          ? activeIdx
+          : Math.max(0, options.findIndex((o) => selectedIds.includes(o.id)));
 
       const forward = event.key === 'ArrowRight' || event.key === 'ArrowDown';
       const nextIndex = (currentIndex + (forward ? 1 : -1) + count) % count;
@@ -90,20 +107,23 @@ export function QuestionCard({
       className="flex flex-1 flex-col"
     >
       <p className="sr-only" aria-live="polite">
-        Question {stepIndex + 1} of {total}
+        {t('common.step', { current: stepIndex + 1, total })}
       </p>
 
       <header className="mb-7">
+        <p className="mb-2.5 font-body text-[10.5px] font-semibold uppercase tracking-[0.2em] text-ember">
+          {t(SECTION_KEY[question.section])}
+        </p>
         <h1
           ref={headingRef}
           tabIndex={-1}
           className="display-tight text-[27px] text-chalk outline-none sm:text-[34px]"
         >
-          {question.question}
+          {t(question.titleKey)}
         </h1>
-        {question.helper && (
+        {question.helperKey && (
           <p className="mt-3.5 font-body text-[14.5px] font-light leading-relaxed text-chalk-dim sm:text-[15.5px]">
-            {question.helper}
+            {t(question.helperKey)}
           </p>
         )}
       </header>
@@ -116,28 +136,28 @@ export function QuestionCard({
           onSubmit={onContinue}
         />
       ) : (
-      <div
-        role={isMulti ? 'group' : 'radiogroup'}
-        aria-label={question.question}
-        onKeyDown={handleKeyDown}
-        className={`grid grid-cols-1 gap-3 ${COLUMN_CLASS[question.columns ?? 2]}`}
-      >
-        {options.map((option, i) => (
-          <IllustrationOption
-            key={option.id}
-            illustration={option.illustration}
-            label={option.title}
-            description={option.description}
-            role={isMulti ? 'checkbox' : 'radio'}
-            selected={selectedIds.includes(option.id)}
-            onSelect={() => onSelect(option.id)}
-            tabIndex={isMulti ? 0 : i === activeIndex ? 0 : -1}
-            registerRef={(el) => {
-              optionRefs.current[i] = el;
-            }}
-          />
-        ))}
-      </div>
+        <div
+          role={isMulti ? 'group' : 'radiogroup'}
+          aria-label={t(question.titleKey)}
+          onKeyDown={handleKeyDown}
+          className={`grid grid-cols-1 gap-3 ${COLUMN_CLASS[question.columns ?? 2]}`}
+        >
+          {options.map((option, i) => (
+            <IllustrationOption
+              key={option.id}
+              illustration={option.illustration}
+              label={t(option.labelKey)}
+              description={option.descriptionKey ? t(option.descriptionKey) : undefined}
+              role={isMulti ? 'checkbox' : 'radio'}
+              selected={selectedIds.includes(option.id)}
+              onSelect={() => onSelect(option.id)}
+              tabIndex={isMulti ? 0 : i === activeIndex ? 0 : -1}
+              registerRef={(el) => {
+                optionRefs.current[i] = el;
+              }}
+            />
+          ))}
+        </div>
       )}
 
       {/* Multi-select needs an explicit commit; single-choice auto-advances. */}
@@ -149,11 +169,13 @@ export function QuestionCard({
             disabled={!canContinue}
             className="w-full rounded-md bg-ember py-4 font-body text-[15px] font-semibold tracking-[0.01em] text-white transition-all duration-150 hover:bg-ember-lit disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ember focus-visible:ring-offset-2 focus-visible:ring-offset-carbon"
           >
-            Continue
+            {t('common.continue')}
           </button>
           {!canContinue && (
             <p className="mt-2.5 text-center font-body text-[12px] text-chalk-dim">
-              Choose at least {minSelections === 1 ? 'one option' : `${minSelections} options`} to continue
+              {minSelections === 1
+                ? t('validation.chooseAtLeastOne')
+                : t('validation.chooseAtLeast', { count: minSelections })}
             </p>
           )}
         </div>

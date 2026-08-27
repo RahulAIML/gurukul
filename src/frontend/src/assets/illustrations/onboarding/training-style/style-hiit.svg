@@ -1,0 +1,14 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — training-style/style-hiit
+       Interval blocks: tall work bursts against short recoveries. The rhythm IS the meaning.
+       Hand-authored (abstract subject, no figure armature to share).
+       Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <rect x="26" y="46" width="16" height="84" rx="8" fill="currentColor"/>
+  <rect x="50" y="106" width="16" height="24" rx="8" fill="var(--ill-neutral)" opacity="0.42"/>
+  <rect x="74" y="46" width="16" height="84" rx="8" fill="currentColor"/>
+  <rect x="98" y="106" width="16" height="24" rx="8" fill="var(--ill-neutral)" opacity="0.42"/>
+  <rect x="122" y="46" width="16" height="84" rx="8" fill="currentColor"/>
+  <path d="M31 52 v72" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="2.8" stroke-linecap="round"/>
+</svg>

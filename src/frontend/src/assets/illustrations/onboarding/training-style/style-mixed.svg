@@ -1,0 +1,14 @@
+<svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- GURUKUL ILLUSTRATION SYSTEM — training-style/style-mixed
+       A bar, a ring and a mat: the three registers of the set, gathered.
+       Hand-authored (abstract subject, no figure armature to share).
+       Accent = currentColor, structure = var(--ill-neutral). -->
+
+  <line x1="24" y1="142" x2="136" y2="142" stroke="var(--ill-neutral)" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+  <rect x="30" y="38" width="76" height="10" rx="5" fill="currentColor"/>
+  <rect x="24" y="26" width="11" height="34" rx="4" fill="currentColor"/>
+  <rect x="101" y="26" width="11" height="34" rx="4" fill="currentColor"/>
+  <circle cx="114" cy="92" r="22" stroke="var(--ill-neutral)" stroke-width="9" opacity="0.6" fill="none"/>
+  <rect x="26" y="112" width="72" height="22" rx="11" fill="currentColor" opacity="0.85"/>
+  <ellipse cx="62" cy="123" rx="7" ry="10" fill="#000000" fill-opacity="0.28"/>
+</svg>

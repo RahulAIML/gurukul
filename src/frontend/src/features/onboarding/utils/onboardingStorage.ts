@@ -1,12 +1,14 @@
 import type { AnswerMap, OnboardingSession } from '../types/onboarding.types';
 
-const STORAGE_KEY = 'gurukul.onboarding.fitness.v1';
+const STORAGE_KEY = 'gurukul.onboarding.fitness.v2';
 
 /**
- * Bump when the question schema changes incompatibly. A stored payload with a
- * different version is discarded rather than mis-read.
+ * Bumped to v2: measure answers changed from `[rawValue, unitId]` to
+ * `[canonicalValue, unitId]`, so a v1 payload would be misread as canonical
+ * when it is not. Version-guarding means a stale payload is discarded rather
+ * than silently producing a wrong BMI.
  */
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
 /**
  * Every access is guarded: localStorage throws in private mode on some
@@ -18,11 +20,14 @@ export function loadAnswers(): AnswerMap {
     if (!raw) return {};
 
     const parsed = JSON.parse(raw) as Partial<OnboardingSession>;
-    if (parsed.version !== SCHEMA_VERSION || typeof parsed.answers !== 'object' || parsed.answers === null) {
+    if (
+      parsed.version !== SCHEMA_VERSION ||
+      typeof parsed.answers !== 'object' ||
+      parsed.answers === null
+    ) {
       return {};
     }
 
-    // Defensively normalise: only keep string[] values.
     const clean: AnswerMap = {};
     for (const [key, value] of Object.entries(parsed.answers)) {
       if (Array.isArray(value) && value.every((v) => typeof v === 'string')) {
@@ -35,12 +40,13 @@ export function loadAnswers(): AnswerMap {
   }
 }
 
-export function saveAnswers(answers: AnswerMap): void {
+export function saveAnswers(answers: AnswerMap, locale?: string): void {
   try {
     const session: OnboardingSession = {
       version: SCHEMA_VERSION,
       answers,
       updatedAt: new Date().toISOString(),
+      locale,
     };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(session));
   } catch {

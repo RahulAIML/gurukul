@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useReducer } from 'react';
-import { fitnessQuestions, getQuestionIndex } from '../data/fitnessQuestions';
+import { fitnessQuestions, getCanonicalUnit, getQuestionIndex } from '../data/fitnessQuestions';
 import type { AnswerMap, Question } from '../types/onboarding.types';
 import { clearAnswers, loadAnswers, saveAnswers } from '../utils/onboardingStorage';
+import { useTranslation } from '../../../i18n';
 
 type Action =
   | { type: 'set'; questionId: string; values: string[] }
@@ -26,10 +27,11 @@ function reducer(state: AnswerMap, action: Action): AnswerMap {
  */
 export function useFitnessOnboarding() {
   const [answers, dispatch] = useReducer(reducer, undefined, loadAnswers);
+  const { locale } = useTranslation();
 
   useEffect(() => {
-    saveAnswers(answers);
-  }, [answers]);
+    saveAnswers(answers, locale);
+  }, [answers, locale]);
 
   const setAnswer = useCallback((questionId: string, values: string[]) => {
     dispatch({ type: 'set', questionId, values });
@@ -75,12 +77,12 @@ export function useFitnessOnboarding() {
 
       if (question.type === 'measure') {
         const raw = value[0];
-        const unit =
-          question.measure?.units.find((u) => u.id === value[1]) ?? question.measure?.units[0];
+        // Range-check against the CANONICAL unit. The stored value is already
+        // converted, so comparing it to the entered unit's range is a category
+        // error — it rejected 180.3cm for being outside 47..91 inches.
+        const unit = getCanonicalUnit(question);
         const n = Number(raw);
-        return (
-          !!raw && !!unit && Number.isFinite(n) && n >= unit.min && n <= unit.max
-        );
+        return !!raw && !!unit && Number.isFinite(n) && n >= unit.min && n <= unit.max;
       }
 
       const min = question.type === 'multiple' ? (question.minSelections ?? 1) : 1;

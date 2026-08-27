@@ -274,3 +274,91 @@ written.push(write('time/time-varies.svg', 'time/time-varies', 'Dashed: no fixed
 
 console.log(`generated ${written.length} illustrations`);
 written.forEach((w) => console.log('  ' + w));
+
+/* ─────────────────────────  FREQUENCY  ─────────────────────────
+   Days per week as a week strip: seven columns, N of them raised. The count of
+   tall bars is the whole signal, so 2 and 6 are distinguishable at 76px in a
+   way "2 days" / "6 days" text on an identical icon never would be. */
+function weekStrip(days) {
+  const COLS = 7;
+  const W = 12;
+  const GAP = 4;
+  const total = COLS * W + (COLS - 1) * GAP; // 108
+  const x0 = (160 - total) / 2; // 26
+  const bars = [];
+  for (let i = 0; i < COLS; i++) {
+    const x = x0 + i * (W + GAP);
+    const on = i < days;
+    bars.push(
+      on
+        ? `  <rect x="${n(x)}" y="58" width="${W}" height="72" rx="6" fill="currentColor"/>`
+        : `  <rect x="${n(x)}" y="106" width="${W}" height="24" rx="6" fill="var(--ill-neutral)" opacity="0.4"/>`,
+    );
+  }
+  // rim light on the first raised bar, matching the set's single light source
+  if (days > 0) bars.push(`  <path d="M${n(x0 + 3)} 64 v60" stroke="#FFFFFF" stroke-opacity="0.26" stroke-width="2.6" stroke-linecap="round"/>`);
+  return [floor(26, 134), ...bars].join('\n');
+}
+
+for (const [days, slug] of [[2, '2-days'], [3, '3-days'], [4, '4-days'], [5, '5-days'], [6, '6-days']]) {
+  written.push(
+    write(`frequency/frequency-${slug}.svg`, `frequency/frequency-${slug}`,
+      `${days} of seven days raised.`, weekStrip(days)),
+  );
+}
+
+/* ─────────────────────────  TRAINING STYLE (figure-based)  ───────────────────────── */
+written.push(write('training-style/style-strength.svg', 'training-style/style-strength',
+  'Overhead press: the clearest read for heavy, low-rep work.',
+  figure({ shoulder: 29, waist: 16, arm: 8, pose: 'overhead', definition: true }, { front: bar(20) })));
+
+written.push(write('training-style/style-muscle.svg', 'training-style/style-muscle',
+  'Flexed frame: moderate weight, higher volume.',
+  figure({ shoulder: 29, waist: 14, arm: 8, pose: 'flex', definition: true })));
+
+written.push(write('training-style/style-cardio.svg', 'training-style/style-cardio',
+  'Steady runner with trailing marks.',
+  figure({ shoulder: 22, waist: 13, arm: 5.5, pose: 'run' }, { behind: speedMarks(30, 54) })));
+
+written.push(write('training-style/style-mobility.svg', 'training-style/style-mobility',
+  'Wide open stance: range of motion and control.',
+  figure({ shoulder: 24, waist: 15, arm: 6.5, pose: 'open' })));
+
+/* ─────────────────────────  MOTIVATION (figure-based)  ───────────────────────── */
+written.push(write('motivation/motivation-strong.svg', 'motivation/motivation-strong',
+  'Flexed frame — capability, not appearance.',
+  figure({ shoulder: 29, waist: 14, arm: 8.5, pose: 'flex', definition: true })));
+
+written.push(write('motivation/motivation-confidence.svg', 'motivation/motivation-confidence',
+  'Upright stance with rising chevrons.',
+  figure({ shoulder: 26, waist: 15, arm: 7, definition: true }, { behind: chevrons(112, 56, 2) })));
+
+/* ─────────────────────────  LIFESTYLE  ─────────────────────────
+   Activity outside training, as a four-step progression: a seated figure, then
+   standing, striding and running with an increasing number of motion marks. */
+const chair = () => [
+  `  <path d="M104 138 v-30 h26 v30 M104 116 h26" stroke="var(--ill-neutral)" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" opacity="0.5" fill="none"/>`,
+];
+
+written.push(write('lifestyle/lifestyle-sedentary.svg', 'lifestyle/lifestyle-sedentary',
+  'Standing figure beside a chair: desk work, little walking. Not drawn as unhealthy.',
+  figure({ shoulder: 24, waist: 17, belly: 2, arm: 6.5 }, { behind: chair() })));
+
+written.push(write('lifestyle/lifestyle-light.svg', 'lifestyle/lifestyle-light',
+  'Standing, one motion mark: some walking through the day.',
+  figure({ shoulder: 24, waist: 16, belly: 1, arm: 6.5 },
+    { behind: [`  <line x1="30" y1="58" x2="48" y2="58" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.5"/>`] })));
+
+written.push(write('lifestyle/lifestyle-moderate.svg', 'lifestyle/lifestyle-moderate',
+  'Striding, two motion marks: on your feet regularly.',
+  figure({ shoulder: 25, waist: 15, arm: 7, pose: 'stride' }, { behind: speedMarks(28, 56) })));
+
+written.push(write('lifestyle/lifestyle-very.svg', 'lifestyle/lifestyle-very',
+  'Running, three motion marks: physical work or constant movement.',
+  figure({ shoulder: 24, waist: 14, arm: 6.5, pose: 'run' },
+    { behind: [
+      ...speedMarks(30, 50),
+      `  <line x1="24" y1="80" x2="40" y2="80" stroke="var(--ill-neutral)" stroke-width="4" stroke-linecap="round" opacity="0.22"/>`,
+    ] })));
+
+console.log(`\ntotal generated: ${written.length}`);
