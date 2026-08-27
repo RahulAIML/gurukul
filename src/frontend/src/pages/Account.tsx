@@ -44,7 +44,7 @@ function Row({ label, value }: { label: string; value: string }) {
 export function Account() {
   const { t, locale } = useTranslation();
   const { section } = useParams<{ section: string }>();
-  const { status, user } = useAuth();
+  const { status, user, isPreview } = useAuth();
 
   // Wait for the session to resolve before deciding. Redirecting during
   // `restoring` would bounce a signed-in user to the log-in page on reload.
@@ -101,6 +101,17 @@ export function Account() {
             </Link>
           ))}
         </nav>
+
+        {/* Says on the page itself what the account is, not just in the banner
+            — a screenshot of this page would otherwise look like a real one. */}
+        {isPreview && (
+          <p
+            role="status"
+            className="mt-6 rounded-md border border-ember/30 bg-ember/[0.08] p-3.5 font-body text-[12.5px] font-light leading-relaxed text-chalk-dim"
+          >
+            {t('preview.notice')}
+          </p>
+        )}
 
         <div className="mt-8 rounded-lg border border-white/[0.09] bg-carbon-2 p-5 sm:p-6">
           {section === 'profile' ? (

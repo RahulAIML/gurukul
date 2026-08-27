@@ -23,7 +23,10 @@ export type AnalyticsEvent =
   | { name: 'signup_started' }
   | { name: 'signup_completed' }
   | { name: 'login_completed' }
-  | { name: 'auth_unavailable_shown' };
+  | { name: 'auth_unavailable_shown' }
+  // Worth counting separately from a real sign-up: a preview entry is a
+  // demo, and mixing the two would inflate the conversion figures.
+  | { name: 'preview_entered' };
 
 export interface AnalyticsSink {
   track(event: AnalyticsEvent): void;

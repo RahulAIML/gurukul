@@ -32,6 +32,41 @@ function selectAdapter(): AuthAdapter {
 
 type Status = 'restoring' | 'anonymous' | 'authenticated';
 
+/**
+ * PREVIEW SESSION — for demonstrating the signed-in screens before the backend
+ * is hosted.
+ *
+ * This is deliberately NOT an authentication path, and the distinction matters:
+ *
+ * - It is reachable only from its own button, never from the credential forms.
+ *   No password is ever submitted, checked, or stored, so no one can come away
+ *   believing their password was verified.
+ * - It exists only while `adapter.isConfigured` is false. The moment a real
+ *   `VITE_API_URL` is set, the button disappears and this code is unreachable.
+ *   It cannot coexist with real auth, so it cannot become a bypass for it.
+ * - A banner is visible on every screen for as long as it is active.
+ * - It grants no privileges. There is no server, so there is nothing to
+ *   authorise against — every "protected" screen it opens is rendering local
+ *   data that was already on this device.
+ */
+const PREVIEW_KEY = 'gurukul.preview';
+
+const previewUser = (): AuthUser => ({
+  id: 'preview',
+  email: 'preview@gurukul.local',
+  name: 'Preview',
+  createdAt: new Date().toISOString(),
+  isPreview: true,
+});
+
+function readPreviewFlag(): boolean {
+  try {
+    return window.localStorage.getItem(PREVIEW_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
 interface AuthContextValue {
   status: Status;
   user: AuthUser | null;
@@ -48,6 +83,11 @@ interface AuthContextValue {
    * or to be honest ("still on this device only") rather than staying silent.
    */
   onboardingSync: SyncOutcome | null;
+  /** True only while there is no real backend to log into. */
+  previewAvailable: boolean;
+  /** Whether the current session is the preview one rather than a real login. */
+  isPreview: boolean;
+  enterPreview: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue | null>(null);
@@ -60,6 +100,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
+
+    // A preview session left over from a previous visit. Only honoured while
+    // there is still no real backend — once one is wired, a stale flag must
+    // never resurrect a fake session.
+    if (!adapter.isConfigured && readPreviewFlag()) {
+      setUser(previewUser());
+      setStatus('authenticated');
+      return;
+    }
+
     adapter
       .restore()
       .then((restored) => {
@@ -103,7 +153,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     [adapter, adopt],
   );
 
+  const enterPreview = useCallback(() => {
+    // Guarded here as well as at the button, so this cannot be called into
+    // existence once a real backend is wired.
+    if (adapter.isConfigured) return;
+    try {
+      window.localStorage.setItem(PREVIEW_KEY, '1');
+    } catch {
+      // Storage unavailable — preview still applies for this visit.
+    }
+    setUser(previewUser());
+    setStatus('authenticated');
+  }, [adapter]);
+
   const logOut = useCallback(async () => {
+    try {
+      window.localStorage.removeItem(PREVIEW_KEY);
+    } catch {
+      // Nothing to clear.
+    }
     await adapter.logOut();
     setUser(null);
     setStatus('anonymous');
@@ -130,8 +198,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       logOut,
       requestPasswordReset,
       onboardingSync,
+      previewAvailable: !adapter.isConfigured,
+      isPreview: user?.isPreview === true,
+      enterPreview,
     }),
-    [status, user, adapter, signUp, logIn, logOut, requestPasswordReset, onboardingSync],
+    [
+      status,
+      user,
+      adapter,
+      signUp,
+      logIn,
+      logOut,
+      requestPasswordReset,
+      onboardingSync,
+      enterPreview,
+    ],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

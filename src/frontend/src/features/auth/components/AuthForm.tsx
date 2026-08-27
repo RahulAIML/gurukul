@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useTranslation, type TranslationKey } from '../../../i18n';
 import { AuthError, useAuth } from '../AuthProvider';
 import { buildOnboardingPayload } from '../onboardingSync';
+import { PreviewEntry } from './PreviewEntry';
 import type { AuthErrorCode } from '../types';
 
 const ERROR_KEY: Record<AuthErrorCode, TranslationKey> = {
@@ -208,6 +209,11 @@ export function AuthForm({ mode, onSuccess }: Props) {
           <p className="font-body text-[13px] font-light leading-relaxed text-chalk">
             {t('auth.error.notConfigured')}
           </p>
+          {/* Deliberately here rather than beside the submit button: it must
+              read as an alternative to signing up, not as a way of doing it. */}
+          <div className="mt-3.5">
+            <PreviewEntry />
+          </div>
         </div>
       )}
 

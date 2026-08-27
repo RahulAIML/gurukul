@@ -336,6 +336,14 @@ export const en = {
     'Your training plan is not generated yet. The questionnaire and your results are the first step; the plan itself arrives in a later release.',
   'account.settings.inDevelopment':
     'Account settings are still being built. Language can be changed from the header on any screen in the meantime.',
+
+  /* ── preview mode (only while no backend is wired) ────────────── */
+  'preview.enter': 'Preview the signed-in screens',
+  'preview.badge': 'Preview',
+  'preview.explain': 'Not a real account. Nothing is saved to a server.',
+  'preview.exit': 'Leave preview',
+  'preview.notice':
+    'This is a preview of the signed-in screens. No account exists and nothing here is stored on a server — the figures below come from the answers saved on this device.',
 } as const;
 
 export type TranslationKey = keyof typeof en;

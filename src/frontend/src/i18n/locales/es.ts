@@ -343,4 +343,12 @@ export const es: Record<TranslationKey, string> = {
     'Tu plan de entrenamiento aún no se ha generado. El cuestionario y tus resultados son el primer paso; el plan llegará en una versión posterior.',
   'account.settings.inDevelopment':
     'Los ajustes de la cuenta todavía se están construyendo. Mientras tanto puedes cambiar el idioma desde la cabecera en cualquier pantalla.',
+
+  /* ── modo vista previa (solo mientras no hay backend) ─────────── */
+  'preview.enter': 'Ver las pantallas con sesión iniciada',
+  'preview.badge': 'Vista previa',
+  'preview.explain': 'No es una cuenta real. Nada se guarda en un servidor.',
+  'preview.exit': 'Salir de la vista previa',
+  'preview.notice':
+    'Esta es una vista previa de las pantallas con sesión iniciada. No existe ninguna cuenta y nada se guarda en un servidor: los datos de abajo vienen de las respuestas guardadas en este dispositivo.',
 };

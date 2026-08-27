@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { BrandMark } from '../features/onboarding/components/OnboardingLayout';
 import { LanguageSelector } from '../features/onboarding/components/LanguageSelector';
 import { HeaderAuth } from '../features/auth/components/HeaderAuth';
+import { PreviewEntry } from '../features/auth/components/PreviewEntry';
 import { useTranslation } from '../i18n';
 
 /**
@@ -82,6 +83,10 @@ export function GymLanding() {
               {t(key)}
             </span>
           ))}
+        </div>
+        {/* Only rendered while no backend is wired. */}
+        <div className="mt-10">
+          <PreviewEntry variant="quiet" />
         </div>
       </main>
 

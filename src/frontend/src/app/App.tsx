@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import { AuthProvider } from '../features/auth/AuthProvider';
+import { PreviewBanner } from '../features/auth/components/PreviewEntry';
 import { fitnessQuestions } from '../features/onboarding/data/fitnessQuestions';
 import { I18nProvider } from '../i18n';
 import { Account } from '../pages/Account';
@@ -17,6 +18,9 @@ export default function App() {
   return (
     <I18nProvider>
       <AuthProvider>
+        {/* Mounted once, above every route, so no screen can render a preview
+            session without saying so. */}
+        <PreviewBanner />
         <Routes>
           <Route path="/" element={<GymLanding />} />
           <Route

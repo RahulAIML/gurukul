@@ -18,6 +18,12 @@ export interface AuthUser {
   name: string;
   /** ISO date. */
   createdAt: string;
+  /**
+   * True only for the local preview session (see `AuthProvider.enterPreview`).
+   * Nothing was authenticated and no server knows this user exists. Any screen
+   * that could mislead someone about that must check this flag.
+   */
+  isPreview?: boolean;
 }
 
 /** Typed error codes so the UI can map to a friendly translated message and
